@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Retention Teardown</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0A;
+  --surface: #111111;
+  --surface2: #1A1A1A;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --text: #F0EDE8;
+  --muted: #888880;
+  --accent: #E8D5B0;
+  --ig-pink: #E1306C;
+  --ig-purple: #833AB4;
+  --ig-orange: #F77737;
+  --ig-yellow: #FCAF45;
+  --green: #3DDC84;
+  --red: #FF4D4D;
+  --blue: #4D9FFF;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; height: 52px;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-id {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--muted);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.nav-id span { color: var(--ig-pink); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 12px; color: var(--muted); text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 88vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 2.5rem 4rem;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(131,58,180,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 70%, rgba(225,48,108,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 60% 80%, rgba(247,119,55,0.07) 0%, transparent 60%);
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--ig-pink);
+  letter-spacing: 0.16em; text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  max-width: 900px;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--ig-pink), var(--ig-purple), var(--ig-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 16px; color: var(--muted);
+  max-width: 560px; margin-top: 1.5rem;
+  line-height: 1.7;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+
+.hero-meta {
+  display: flex; gap: 3rem; margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+.hero-stat { }
+.hero-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--ig-pink), var(--ig-orange));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1;
+}
+.hero-stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── LAYOUT ── */
+.container { max-width: 960px; margin: 0 auto; padding: 4rem 2.5rem; }
+.container-wide { max-width: 1100px; margin: 0 auto; padding: 4rem 2.5rem; }
+
+section { margin-bottom: 5rem; }
+
+.section-kicker {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--ig-pink);
+  margin-bottom: 0.75rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-kicker::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--border2), transparent);
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+}
+h3 {
+  font-size: 1rem; font-weight: 500;
+  color: var(--text); margin-bottom: 0.5rem;
+}
+p { color: rgba(240,237,232,0.75); margin-bottom: 0.8rem; }
+strong { color: var(--text); font-weight: 500; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+}
+.card-grid { display: grid; gap: 16px; }
+.card-grid.col2 { grid-template-columns: 1fr 1fr; }
+.card-grid.col3 { grid-template-columns: 1fr 1fr 1fr; }
+
+/* ── HOOK MODEL ── */
+.hook-diagram {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.hook-quadrant {
+  background: var(--surface);
+  padding: 2rem;
+  position: relative;
+  transition: background 0.2s;
+}
+.hook-quadrant:hover { background: var(--surface2); }
+.hook-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem; font-weight: 900;
+  position: absolute; top: 1rem; right: 1.25rem;
+  opacity: 0.06; line-height: 1;
+  color: var(--text);
+}
+.hook-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.hook-label.trigger { color: var(--ig-pink); }
+.hook-label.action { color: var(--ig-orange); }
+.hook-label.reward { color: var(--ig-yellow); }
+.hook-label.invest { color: var(--green); }
+.hook-title { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.75rem; }
+.hook-list { list-style: none; }
+.hook-list li {
+  font-size: 13px; color: var(--muted);
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.hook-list li:last-child { border-bottom: none; }
+.hook-list li::before { content: '→'; color: var(--ig-pink); flex-shrink: 0; }
+
+/* ── RETENTION LOOPS ── */
+.loop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.loop-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.loop-card:hover { border-color: var(--border2); }
+.loop-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+}
+.loop-card.pink::before { background: linear-gradient(to right, var(--ig-pink), var(--ig-purple)); }
+.loop-card.orange::before { background: linear-gradient(to right, var(--ig-orange), var(--ig-yellow)); }
+.loop-card.purple::before { background: linear-gradient(to right, var(--ig-purple), var(--blue)); }
+.loop-card.green::before { background: linear-gradient(to right, var(--green), #40E0D0); }
+
+.loop-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.loop-name {
+  font-size: 1rem; font-weight: 500;
+  margin-bottom: 0.35rem; color: var(--text);
+}
+.loop-desc { font-size: 13px; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+.loop-steps { list-style: none; counter-reset: loop-counter; }
+.loop-steps li {
+  counter-increment: loop-counter;
+  font-size: 12px; color: var(--muted);
+  padding: 5px 0 5px 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative; line-height: 1.5;
+}
+.loop-steps li:last-child { border-bottom: none; }
+.loop-steps li::before {
+  content: counter(loop-counter);
+  position: absolute; left: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--ig-pink);
+  font-weight: 500; top: 6px;
+}
+.loop-strength {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 1rem; padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.loop-strength-label { font-size: 11px; color: var(--muted); }
+.loop-strength-bar { flex: 1; height: 3px; background: var(--border2); border-radius: 3px; overflow: hidden; }
+.loop-strength-fill { height: 100%; border-radius: 3px; }
+.loop-strength-val { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ig-pink); }
+
+/* ── FOGG MODEL TABLE ── */
+.fogg-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.fogg-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.25rem 1.4rem;
+}
+.fogg-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.fogg-title { font-size: 14px; font-weight: 500; margin-bottom: 0.75rem; }
+.fogg-item { font-size: 12px; color: var(--muted); padding: 4px 0; border-bottom: 1px solid var(--border); }
+.fogg-item:last-child { border-bottom: none; }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before {
+  content: ''; position: absolute;
+  left: 6px; top: 8px; bottom: 8px;
+  width: 1px; background: var(--border2);
+}
+.tl-item { position: relative; margin-bottom: 2rem; }
+.tl-dot {
+  position: absolute; left: -2rem; top: 5px;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--ig-pink);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--ig-pink);
+}
+.tl-era {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--ig-pink);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 3px;
+}
+.tl-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.tl-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── COMPARISON ── */
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.compare-table thead tr { border-bottom: 1px solid var(--border2); }
+.compare-table th {
+  padding: 10px 14px; text-align: left;
+  font-weight: 500; font-size: 11px;
+  color: var(--muted); letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.compare-table th:first-child { color: var(--text); }
+.compare-table td {
+  padding: 11px 14px; color: rgba(240,237,232,0.7);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top; line-height: 1.5;
+}
+.compare-table td:first-child { color: var(--text); font-weight: 500; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: var(--surface2); }
+
+/* ── CRITIQUE / RECOMMENDATIONS ── */
+.rec-list { display: grid; gap: 14px; }
+.rec-item {
+  display: grid; grid-template-columns: 48px 1fr;
+  gap: 1rem; align-items: start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.25rem;
+  transition: border-color 0.2s;
+}
+.rec-item:hover { border-color: var(--border2); }
+.rec-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 700;
+  color: var(--ig-pink); opacity: 0.4;
+  line-height: 1;
+}
+.rec-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.rec-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.rec-tag {
+  display: inline-block; margin-top: 8px;
+  font-size: 10px; font-weight: 500;
+  padding: 2px 8px; border-radius: 20px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.tag-gap { background: rgba(255,77,77,0.12); color: var(--red); }
+.tag-opp { background: rgba(61,220,132,0.12); color: var(--green); }
+.tag-risk { background: rgba(247,119,55,0.12); color: var(--ig-orange); }
+
+/* ── PULL QUOTE ── */
+.pull-quote {
+  border-left: 3px solid var(--ig-pink);
+  padding: 1.25rem 1.75rem;
+  margin: 2rem 0;
+  background: rgba(225,48,108,0.05);
+  border-radius: 0 10px 10px 0;
+}
+.pull-quote p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-style: italic;
+  color: var(--text); line-height: 1.6; margin: 0;
+}
+.pull-quote cite {
+  display: block; margin-top: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--muted);
+  font-style: normal; letter-spacing: 0.08em;
+}
+
+/* ── BADGE ── */
+.badge {
+  display: inline-block; font-size: 10px; font-weight: 500;
+  padding: 2px 8px; border-radius: 20px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.badge-pink { background: rgba(225,48,108,0.15); color: var(--ig-pink); }
+.badge-green { background: rgba(61,220,132,0.15); color: var(--green); }
+.badge-orange { background: rgba(247,119,55,0.15); color: var(--ig-orange); }
+
+/* ── DIVIDER ── */
+.divider {
+  border: none; border-top: 1px solid var(--border);
+  margin: 1rem 0 3rem;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-left {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--muted);
+}
+.footer-left span { color: var(--ig-pink); }
+
+@media (max-width: 700px) {
+  .card-grid.col2, .card-grid.col3,
+  .hook-diagram, .loop-grid,
+  .fogg-grid { grid-template-columns: 1fr; }
+  nav ul { display: none; }
+  .hero-meta { gap: 1.5rem; flex-wrap: wrap; }
+  .hero h1 { font-size: 2.6rem; }
+  .rec-item { grid-template-columns: 32px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-id">PM Portfolio · <span>Project #03</span></div>
+  <ul class="nav-links">
+    <li><a href="#hook">Hook Model</a></li>
+    <li><a href="#loops">Retention Loops</a></li>
+    <li><a href="#reels">Reels Wedge</a></li>
+    <li><a href="#evolution">Evolution</a></li>
+    <li><a href="#gaps">Gaps</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content" style="position:relative;">
+    <div class="hero-eyebrow">Product Teardown · Behavioural Analysis</div>
+    <h1>Inside Instagram's<br><em>Retention Machine</em></h1>
+    <p class="hero-sub">A close look at how Instagram gets 2 billion people to open the app by reflex - using the Hook Model, BJ Fogg's Behaviour Model, and loop analysis across Feed, Stories, Reels, and DMs.</p>
+    <div class="hero-meta">
+      <div class="hero-stat">
+        <div class="hero-stat-num">2B+</div>
+        <div class="hero-stat-label">Monthly active users</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">29 min</div>
+        <div class="hero-stat-label">Avg daily time on app</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">7×</div>
+        <div class="hero-stat-label">Avg daily opens per user</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">500M</div>
+        <div class="hero-stat-label">Daily Stories viewers</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- FRAMEWORK INTRO -->
+  <section>
+    <div class="section-kicker">Framework</div>
+    <h2>Two lenses, one teardown</h2>
+    <p>This teardown uses two frameworks together. <strong>Nir Eyal's Hook Model</strong> shows how habitual behaviour is built over time: trigger, action, reward, investment. <strong>BJ Fogg's Behaviour Model</strong> shows why individual moments of engagement work or fail: Behaviour = Motivation x Ability x Prompt. Instagram is good at all of these at once, which is what makes it hard to put down.</p>
+    <div class="pull-quote">
+      <p>"Instagram learns your triggers, lowers friction at the exact moment you're weakest, and makes you a little more invested with every scroll."</p>
+      <cite>Teardown thesis</cite>
+    </div>
+  </section>
+
+  <!-- HOOK MODEL -->
+  <section id="hook">
+    <div class="section-kicker">Section 01 · Nir Eyal's Hook Model</div>
+    <h2>Trigger, Action, Reward, Investment</h2>
+    <p style="margin-bottom:1.5rem;">Every Instagram session is a hook cycle. Here's how each phase is built:</p>
+
+    <div class="hook-diagram">
+      <!-- Trigger -->
+      <div class="hook-quadrant">
+        <div class="hook-num">1</div>
+        <div class="hook-label trigger">Trigger</div>
+        <div class="hook-title">What pulls you in</div>
+        <ul class="hook-list">
+          <li><strong>External notifications:</strong> likes, comments, DMs, story views, mentions, tags. Timed for moments when you're likely idle.</li>
+          <li><strong>External social proof:</strong> "[Friend] started following [Account]" fires a FOMO response.</li>
+          <li><strong>Internal boredom:</strong> Instagram trained itself to be the default gap-filler. Unstructured downtime becomes an Instagram reflex.</li>
+          <li><strong>Internal anxiety:</strong> Did anyone like my photo? Story view count checking.</li>
+          <li><strong>Internal loneliness:</strong> Waiting on a DM; parasocial creator relationships.</li>
+        </ul>
+      </div>
+
+      <!-- Action -->
+      <div class="hook-quadrant">
+        <div class="hook-num">2</div>
+        <div class="hook-label action">Action</div>
+        <div class="hook-title">Making it effortless</div>
+        <ul class="hook-list">
+          <li><strong>One-tap open:</strong> Notifications deep-link directly to the trigger content. No navigation friction.</li>
+          <li><strong>Infinite scroll:</strong> No natural stopping point. No pagination. No end of feed.</li>
+          <li><strong>Autoplay on Reels:</strong> The next video starts before you decide to watch it.</li>
+          <li><strong>Bottom nav always visible:</strong> Switching surfaces costs one tap.</li>
+          <li><strong>Story tap:</strong> The simplest engagement gesture. Just tap forward. No like required.</li>
+        </ul>
+      </div>
+
+      <!-- Reward -->
+      <div class="hook-quadrant">
+        <div class="hook-num">3</div>
+        <div class="hook-label reward">Variable Reward</div>
+        <div class="hook-title">The slot machine effect</div>
+        <ul class="hook-list">
+          <li><strong>Rewards of the tribe:</strong> Likes, comments, DM replies. Social validation. Unpredictable in timing - the most addictive class of reward.</li>
+          <li><strong>Rewards of the hunt:</strong> Explore page. Each scroll is a new hunt. You don't know what you'll find.</li>
+          <li><strong>Rewards of the self:</strong> Aesthetic satisfaction from a good grid; follower milestones; reach spikes.</li>
+          <li><strong>Variable ratio schedule:</strong> Like slot machines, rewards are unpredictable. Not every scroll delivers. That intermittency is the mechanism.</li>
+        </ul>
+      </div>
+
+      <!-- Investment -->
+      <div class="hook-quadrant">
+        <div class="hook-num">4</div>
+        <div class="hook-label invest">Investment</div>
+        <div class="hook-title">What you leave behind</div>
+        <ul class="hook-list">
+          <li><strong>Content:</strong> Photos, Reels, Stories. Each piece posted raises the switching cost. Your archive lives here.</li>
+          <li><strong>Social graph:</strong> Follower and following relationships built over years. Can't be recreated on another platform.</li>
+          <li><strong>Algorithm training:</strong> Every like, save, and skip teaches the algorithm your taste, making future feeds more relevant.</li>
+          <li><strong>DM history:</strong> Conversations, shared posts, voice notes. Relationships conducted inside Instagram.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- BJ FOGG -->
+  <section>
+    <div class="section-kicker">Section 02 · BJ Fogg's Behaviour Model</div>
+    <h2>Motivation x Ability x Prompt</h2>
+    <p style="margin-bottom:1.5rem;">B = MAP. Instagram pushes hard on all three. If any one drops to zero, the behaviour stops.</p>
+
+    <div class="fogg-grid">
+      <div class="fogg-card">
+        <div class="fogg-label" style="color:var(--ig-pink);">Motivation</div>
+        <div class="fogg-title">Why users want to engage</div>
+        <div class="fogg-item">Social belonging & connection</div>
+        <div class="fogg-item">Fear of missing out (FOMO)</div>
+        <div class="fogg-item">Self-expression & identity signal</div>
+        <div class="fogg-item">Entertainment & escapism</div>
+        <div class="fogg-item">Aspirational lifestyle content</div>
+        <div class="fogg-item">Parasocial creator relationships</div>
+      </div>
+      <div class="fogg-card">
+        <div class="fogg-label" style="color:var(--ig-orange);">Ability</div>
+        <div class="fogg-title">How Instagram lowers friction</div>
+        <div class="fogg-item">Infinite scroll (no stopping cue)</div>
+        <div class="fogg-item">One-tap reactions (double-tap like)</div>
+        <div class="fogg-item">Autoplay removes decision fatigue</div>
+        <div class="fogg-item">Stories expire → urgency without choice</div>
+        <div class="fogg-item">In-app camera → no context switch</div>
+        <div class="fogg-item">Templates for Reels → low creation cost</div>
+      </div>
+      <div class="fogg-card">
+        <div class="fogg-label" style="color:var(--green);">Prompt</div>
+        <div class="fogg-title">How Instagram interrupts your day</div>
+        <div class="fogg-item">Push: likes, comments, DMs, tags</div>
+        <div class="fogg-item">Push: "X hasn't posted in a while"</div>
+        <div class="fogg-item">Push: "Your story expires in 1 hour"</div>
+        <div class="fogg-item">Email: weekly activity digest</div>
+        <div class="fogg-item">In-app: red notification badge</div>
+        <div class="fogg-item">Social: "[Friend] is live right now"</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- RETENTION LOOPS -->
+  <section id="loops">
+    <div class="section-kicker">Section 03 · Core Retention Loops</div>
+    <h2>Five loops, all interlocked</h2>
+    <p style="margin-bottom:1.5rem;">Each surface has its own retention loop. They're built so that trying to leave one pulls you into another.</p>
+
+    <div class="loop-grid">
+
+      <div class="loop-card pink">
+        <div class="loop-icon">📸</div>
+        <div class="loop-name">The Validation Loop (Feed)</div>
+        <div class="loop-desc">The oldest loop. Powered entirely by social validation and the anxiety that comes with it.</div>
+        <ol class="loop-steps">
+          <li>User posts a photo to Feed</li>
+          <li>Anxiety builds: who saw it? Who liked it?</li>
+          <li>Notification fires for each like or comment</li>
+          <li>User opens app to check, sees new content while there</li>
+          <li>Scrolls Feed, consumes, may post again</li>
+          <li>Loop resets. Investment grows with each post.</li>
+        </ol>
+        <div class="loop-strength">
+          <span class="loop-strength-label">Strength</span>
+          <div class="loop-strength-bar"><div class="loop-strength-fill" style="width:90%;background:linear-gradient(to right,var(--ig-pink),var(--ig-purple));"></div></div>
+          <span class="loop-strength-val">9/10</span>
+        </div>
+      </div>
+
+      <div class="loop-card orange">
+        <div class="loop-icon">⏳</div>
+        <div class="loop-name">The Urgency Loop (Stories)</div>
+        <div class="loop-desc">Stories expire in 24 hours. That's entirely manufactured scarcity. The urgency is the product.</div>
+        <ol class="loop-steps">
+          <li>Friend posts a Story</li>
+          <li>Expires in 24h creates a reason to watch now</li>
+          <li>User opens app, sees Story ring on avatar</li>
+          <li>Watches stories, taps through multiple accounts</li>
+          <li>Story views trigger view-count checking by the poster</li>
+          <li>Poster opens app to see who watched</li>
+        </ol>
+        <div class="loop-strength">
+          <span class="loop-strength-label">Strength</span>
+          <div class="loop-strength-bar"><div class="loop-strength-fill" style="width:85%;background:linear-gradient(to right,var(--ig-orange),var(--ig-yellow));"></div></div>
+          <span class="loop-strength-val">8.5/10</span>
+        </div>
+      </div>
+
+      <div class="loop-card purple">
+        <div class="loop-icon">🎬</div>
+        <div class="loop-name">The Rabbit Hole Loop (Reels)</div>
+        <div class="loop-desc">Passive, algorithmic, and built so the session never ends. Instagram's answer to TikTok.</div>
+        <ol class="loop-steps">
+          <li>User opens app for any reason</li>
+          <li>Reels tab is prominent in the bottom nav</li>
+          <li>First Reel is tailored to taste, immediate hit</li>
+          <li>Autoplay fires next Reel before decision fatigue can set in</li>
+          <li>Algorithm learns from skips and pauses in real time</li>
+          <li>Each video is slightly more personalised. Leaving gets harder.</li>
+        </ol>
+        <div class="loop-strength">
+          <span class="loop-strength-label">Strength</span>
+          <div class="loop-strength-bar"><div class="loop-strength-fill" style="width:95%;background:linear-gradient(to right,var(--ig-purple),var(--blue));"></div></div>
+          <span class="loop-strength-val">9.5/10</span>
+        </div>
+      </div>
+
+      <div class="loop-card green">
+        <div class="loop-icon">💬</div>
+        <div class="loop-name">The Conversation Loop (DMs)</div>
+        <div class="loop-desc">DMs turn Instagram from a broadcast medium into a relationship. Once that happens, the switching cost becomes personal.</div>
+        <ol class="loop-steps">
+          <li>User shares a Reel or post to a friend via DM</li>
+          <li>Friend replies, DM notification fires</li>
+          <li>User opens DM, sees conversation thread</li>
+          <li>Conversation continues, relationship deepens inside app</li>
+          <li>User shares more content, fuelling Feed and Reels consumption</li>
+          <li>Moving the conversation elsewhere feels like a downgrade</li>
+        </ol>
+        <div class="loop-strength">
+          <span class="loop-strength-label">Strength</span>
+          <div class="loop-strength-bar"><div class="loop-strength-fill" style="width:78%;background:linear-gradient(to right,var(--green),#40E0D0);"></div></div>
+          <span class="loop-strength-val">7.8/10</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- REELS AS WEDGE -->
+  <section id="reels">
+    <div class="section-kicker">Section 04 · The Reels Thesis</div>
+    <h2>Reels isn't a feature.<br>It's a separate retention engine.</h2>
+    <p>When TikTok took off in 2020, Instagram had a real problem. Feed and Stories both need either social connections or creation intent. Reels needs neither. A brand new user with zero social graph can be retained by the algorithm alone.</p>
+    <p style="margin-bottom:1.5rem;">That was a structural shift in how Instagram retains users, from social-graph-dependent retention to interest-graph-driven retention.</p>
+
+    <div class="card-grid col2">
+      <div class="card">
+        <h3 style="color:var(--ig-pink);margin-bottom:0.4rem;">Pre-Reels Instagram (2010–2019)</h3>
+        <p style="font-size:13px;">Retention depended entirely on the social graph. New users churned if they had no friends to follow. Value was proportional to network size. Switching cost: your social connections.</p>
+        <ul style="list-style:none;margin-top:0.75rem;">
+          <li style="font-size:12px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border);">Required: existing friends on platform</li>
+          <li style="font-size:12px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border);">D1 retention: fragile for new users</li>
+          <li style="font-size:12px;color:var(--muted);padding:4px 0;">Value: social connection, broadcasting</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--ig-purple);margin-bottom:0.4rem;">Post-Reels Instagram (2020–present)</h3>
+        <p style="font-size:13px;">Retention partly decoupled from social graph. A new user with zero friends gets hooked by the algorithm immediately. Switching cost expanded: social connections plus algorithm taste training.</p>
+        <ul style="list-style:none;margin-top:0.75rem;">
+          <li style="font-size:12px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border);">Required: nothing. Algorithm works cold.</li>
+          <li style="font-size:12px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border);">D1 retention: dramatically improved</li>
+          <li style="font-size:12px;color:var(--muted);padding:4px 0;">Value: entertainment + social + discovery</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- EVOLUTION TIMELINE -->
+  <section id="evolution">
+    <div class="section-kicker">Section 05 · Retention Strategy Evolution</div>
+    <h2>How it was built,<br>feature by feature</h2>
+    <p style="margin-bottom:2rem;">Each major launch was a retention decision in disguise.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-era">2010 · Launch</div>
+        <div class="tl-title">Photo feed + social graph</div>
+        <div class="tl-desc">Core validation loop established. Double-tap to like. Follows build the social graph. If your friends weren't on it, there was no reason to stay.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-era">2013 · Video</div>
+        <div class="tl-title">15-second video posts</div>
+        <div class="tl-desc">Time per session went up. Video builds stronger parasocial bonds with creators, which strengthened retention around creator-following behaviour.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-era">2016 · Stories</div>
+        <div class="tl-title">The urgency loop is born</div>
+        <div class="tl-desc">Copied from Snapchat. The 24-hour expiry created a daily reason to open the app. Story view counts added a second validation anxiety loop for anyone posting.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-era">2016 · Algorithm</div>
+        <div class="tl-title">Feed goes non-chronological</div>
+        <div class="tl-desc">Controversial but deliberate. Algorithm optimises for engagement over recency. Users now open more often to avoid missing things, which is urgency manufactured at the feed level.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-era">2018 · Activity dashboard</div>
+        <div class="tl-title">"Your activity" time tracker added</div>
+        <div class="tl-desc">Performative wellness. Didn't reduce usage. Gave Instagram regulatory cover and a PR narrative. No meaningful impact on time-spent.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-era">2020 · Reels</div>
+        <div class="tl-title">Interest graph enters the retention model</div>
+        <div class="tl-desc">The real shift. Reels decoupled retention from the social graph for the first time. New users could be retained purely by the algorithm. TikTok's threat was neutralised.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-era">2022 · Full-screen feed</div>
+        <div class="tl-title">Feed converges with Reels</div>
+        <div class="tl-desc">Backlash was loud. Partly reverted. Exposed the tension: Instagram wants TikTok's engagement model but risks losing its identity as a photo-sharing platform.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-era">2023–present</div>
+        <div class="tl-title">Broadcast Channels + Threads</div>
+        <div class="tl-desc">Broadcast Channels add a creator-to-fan loop. Threads is separate but adjacent. Instagram is building surface area faster than any competitor can match.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CROSS-SURFACE COMPARISON -->
+  <section>
+    <div class="section-kicker">Section 06 · Surface Comparison</div>
+    <h2>How each surface scores<br>on retention dimensions</h2>
+
+    <div class="card" style="overflow-x:auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Surface</th>
+            <th>Primary hook</th>
+            <th>Trigger type</th>
+            <th>Session depth</th>
+            <th>Investment built</th>
+            <th>Switching cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Feed</td>
+            <td>Social validation</td>
+            <td>Internal (anxiety)</td>
+            <td>Medium</td>
+            <td>Content archive, social graph</td>
+            <td><span class="badge badge-pink">Very High</span></td>
+          </tr>
+          <tr>
+            <td>Stories</td>
+            <td>Urgency / FOMO</td>
+            <td>External (expiry)</td>
+            <td>Low–Medium</td>
+            <td>Daily habit, view count ritual</td>
+            <td><span class="badge badge-orange">High</span></td>
+          </tr>
+          <tr>
+            <td>Reels</td>
+            <td>Passive entertainment</td>
+            <td>External + algorithm</td>
+            <td>Very High</td>
+            <td>Algorithm taste training</td>
+            <td><span class="badge badge-pink">Very High</span></td>
+          </tr>
+          <tr>
+            <td>Explore</td>
+            <td>Discovery / hunt</td>
+            <td>Internal (curiosity)</td>
+            <td>High</td>
+            <td>Saved posts, follows</td>
+            <td><span class="badge badge-green">Medium</span></td>
+          </tr>
+          <tr>
+            <td>DMs</td>
+            <td>Social reciprocity</td>
+            <td>External (message)</td>
+            <td>Low</td>
+            <td>Relationships, conversation history</td>
+            <td><span class="badge badge-pink">Very High</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- GAPS & RECOMMENDATIONS -->
+  <section id="gaps">
+    <div class="section-kicker">Section 07 · Gaps & Recommendations</div>
+    <h2>Where the strategy<br>has real cracks</h2>
+    <p style="margin-bottom:1.5rem;">Three gaps worth taking seriously:</p>
+
+    <div class="rec-list">
+      <div class="rec-item">
+        <div class="rec-num">01</div>
+        <div>
+          <div class="rec-title">Creator burnout</div>
+          <div class="rec-body">The validation loop only works if creators keep posting. But the algorithm punishes inconsistency. Reach drops if you go quiet. That creates burnout, and burned-out creators take their audiences somewhere else: Substack, YouTube, podcasts. Instagram's retention depends on creator output but does little to protect creator wellbeing.</div>
+          <span class="rec-tag tag-gap">Gap</span>
+          <span class="rec-tag tag-opp">What I'd do: scheduled break mode with reach protection, less anxiety-inducing analytics, post-scheduling without algorithmic penalty</span>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num">02</div>
+        <div>
+          <div class="rec-title">Reels is eating the platform's identity</div>
+          <div class="rec-body">Optimising for Reels time-spent is working by the numbers, but it's eroding the emotional connection users have with Instagram as a personal memory archive. The 2022 full-screen feed backlash showed users notice. The risk is that Instagram becomes interchangeable with TikTok.</div>
+          <span class="rec-tag tag-risk">Risk</span>
+          <span class="rec-tag tag-opp">What I'd do: reinvest in the photo grid as an identity surface. Better memories, grid customisation, a meaningful annual recap.</span>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num">03</div>
+        <div>
+          <div class="rec-title">Notification fatigue</div>
+          <div class="rec-body">The external trigger strategy depends on volume. As iOS makes silencing apps easier and users get more selective, that layer weakens. Instagram hasn't built enough internal trigger strength to compensate. It still relies more on pushing users in than pulling them in by habit.</div>
+          <span class="rec-tag tag-gap">Gap</span>
+          <span class="rec-tag tag-opp">What I'd do: shift toward user-chosen triggers. Weekly recaps, opt-in memory prompts, digests users actually want to receive.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUMMARY -->
+  <section>
+    <div class="section-kicker">Section 08 · Summary</div>
+    <h2>The verdict</h2>
+    <div class="card">
+      <p>Instagram has probably the most sophisticated multi-surface retention system in consumer tech. What makes it work isn't any single feature. It's that the loops interlock. Stories feed the validation loop. Reels catches users the social graph can't. DMs lock relationships inside the platform. Each surface adds investment that makes leaving more costly.</p>
+      <p>The honest PM take: Instagram's retention doesn't run on dark patterns alone. A lot of it is genuinely good product - content users want to see, connections that actually matter to them. It works because it delivers real value while also extracting more than it gives back in time and attention.</p>
+      <p>The real risk ahead: as regulatory pressure grows and users get more aware of how these systems work, the platforms that last will be the ones building retention on value rather than compulsion.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-left">PM Portfolio · <span>Project #03</span> · Instagram Retention Teardown</div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Frameworks: Hook Model · BJ Fogg B=MAP</div>
+</footer>
+
+</body>
+</html>
