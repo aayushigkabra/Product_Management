@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fintech Growth Strategy: Tier-2 India</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest: #1B4332;
+  --forest-mid: #2D6A4F;
+  --forest-light: #D8F3DC;
+  --cream: #F5F0E8;
+  --cream-dark: #EDE6D6;
+  --copper: #B87333;
+  --copper-light: #F5E6D3;
+  --ink: #12200F;
+  --ink-60: rgba(18,32,15,0.6);
+  --ink-30: rgba(18,32,15,0.3);
+  --ink-10: rgba(18,32,15,0.1);
+  --red: #8B1A1A;
+  --red-light: #F5E8E8;
+  --gold: #8B6914;
+  --gold-light: #F5F0D8;
+  --rule: rgba(18,32,15,0.15);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--ink);font-size:15px;line-height:1.7;}
+nav{position:sticky;top:0;z-index:100;background:var(--forest);height:48px;display:flex;align-items:center;padding:0 3rem;gap:2rem;}
+.nav-brand{font-family:'Fira Code',monospace;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;white-space:nowrap;margin-right:auto;}
+.nav-brand strong{color:var(--copper);font-weight:400;}
+nav a{font-size:11px;color:rgba(255,255,255,0.35);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.15s;}
+nav a:hover{color:rgba(255,255,255,0.85);}
+.masthead{background:var(--forest);padding:5rem 3rem 4rem;position:relative;overflow:hidden;}
+.masthead::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--copper) 0,var(--copper) 40px,transparent 40px,transparent 48px);}
+.masthead-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;max-width:1000px;align-items:end;}
+.masthead-eyebrow{font-family:'Fira Code',monospace;font-size:10px;color:var(--copper);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;}
+.masthead h1{font-family:'Fraunces',serif;font-size:clamp(2.8rem,5vw,4.8rem);font-weight:900;line-height:0.95;color:var(--cream);letter-spacing:-0.03em;margin-bottom:1.5rem;}
+.masthead h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;color:var(--copper);letter-spacing:0.01em;}
+.masthead-sub{font-size:14px;color:rgba(245,240,232,0.5);line-height:1.7;max-width:420px;}
+.masthead-right{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);}
+.masthead-stat{background:rgba(0,0,0,0.2);padding:1.4rem 1.6rem;}
+.masthead-stat-n{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--copper);line-height:1;margin-bottom:6px;}
+.masthead-stat-l{font-size:11px;color:rgba(245,240,232,0.45);line-height:1.4;}
+.page{max-width:1000px;margin:0 auto;padding:4rem 3rem;}
+.chapter{margin-bottom:5rem;padding-bottom:5rem;border-bottom:1px solid var(--rule);}
+.chapter:last-child{border-bottom:none;}
+.chapter-num{font-family:'Fira Code',monospace;font-size:10px;color:var(--copper);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.4rem;}
+h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;line-height:1.1;letter-spacing:-0.025em;color:var(--ink);margin-bottom:1.5rem;}
+h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem;letter-spacing:-0.01em;}
+p{color:var(--ink-60);margin-bottom:0.8rem;}
+strong{color:var(--ink);font-weight:500;}
+.col-layout{display:grid;grid-template-columns:2fr 1fr;gap:3rem;align-items:start;}
+.mbar-list{display:flex;flex-direction:column;gap:18px;}
+.mbar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.mbar-label{font-size:12px;color:var(--ink-60);}
+.mbar-val{font-family:'Fira Code',monospace;font-size:13px;color:var(--forest);font-weight:500;}
+.mbar-track{background:var(--ink-10);height:6px;position:relative;}
+.mbar-fill{position:absolute;left:0;top:0;height:100%;background:var(--forest);}
+.sizing-stack{display:flex;flex-direction:column;gap:12px;}
+.sizing-row{display:flex;align-items:center;gap:16px;padding:14px 18px;background:var(--cream-dark);border-left:3px solid var(--forest);}
+.sizing-row.som{border-left-color:var(--copper);}
+.sizing-n{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:var(--forest);line-height:1;flex-shrink:0;}
+.sizing-row.som .sizing-n{color:var(--copper);}
+.sizing-desc{font-size:12px;color:var(--ink-60);line-height:1.4;}
+.sizing-tag{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--forest);margin-bottom:2px;}
+blockquote{border-top:2px solid var(--forest);border-bottom:1px solid var(--rule);padding:1.5rem 0;margin:2rem 0;}
+blockquote p{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;font-weight:400;color:var(--ink);line-height:1.65;margin-bottom:0.5rem;letter-spacing:0.01em;}
+blockquote cite{font-family:'Fira Code',monospace;font-size:10px;color:var(--ink-30);letter-spacing:0.1em;text-transform:uppercase;font-style:normal;}
+.persona-pair{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.persona{background:var(--cream-dark);}
+.persona-head{background:var(--forest);padding:1.2rem 1.5rem;display:flex;align-items:center;gap:12px;}
+.p-avatar{width:38px;height:38px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.p-name{font-size:13px;font-weight:500;color:#fff;}
+.p-role{font-size:11px;color:rgba(255,255,255,0.45);margin-top:1px;}
+.p-row{display:flex;border-bottom:1px solid var(--rule);font-size:12px;}
+.p-row:last-child{border-bottom:none;}
+.p-key{font-family:'Fira Code',monospace;font-size:9px;color:var(--copper);text-transform:uppercase;letter-spacing:0.1em;width:70px;flex-shrink:0;padding:9px 12px;border-right:1px solid var(--rule);display:flex;align-items:flex-start;}
+.p-val{padding:8px 12px;color:var(--ink-60);line-height:1.5;}
+.funnel-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+.f-bar{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;font-size:12px;font-weight:500;margin-bottom:4px;}
+.f-pct{font-family:'Fira Code',monospace;font-size:11px;}
+.f-drop{font-family:'Fira Code',monospace;font-size:10px;color:var(--red);padding:3px 0 3px 14px;margin-bottom:6px;}
+.f-fix{padding:10px 0;border-bottom:1px solid var(--rule);}
+.f-fix:last-child{border-bottom:none;}
+.f-fix-stage{font-family:'Fira Code',monospace;font-size:9px;color:var(--copper);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:3px;}
+.f-fix-text{font-size:12px;color:var(--ink-60);line-height:1.5;}
+.lever-list{}
+.lever{display:grid;grid-template-columns:52px 1fr 60px;border-bottom:1px solid var(--rule);padding:1.4rem 0;gap:1.5rem;align-items:start;}
+.lever:last-child{border-bottom:none;}
+.lever-n{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;color:var(--ink-10);line-height:1;text-align:right;padding-top:2px;}
+.lever-title{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:5px;letter-spacing:-0.01em;}
+.lever-desc{font-size:13px;color:var(--ink-60);line-height:1.6;}
+.lever-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.ltag{font-family:'Fira Code',monospace;font-size:9px;padding:2px 7px;letter-spacing:0.06em;text-transform:uppercase;}
+.ltag-g{background:var(--forest-light);color:var(--forest);}
+.ltag-c{background:var(--copper-light);color:var(--copper);}
+.ltag-b{background:#DDE8F5;color:#1A3A6B;}
+.lever-badge{font-family:'Fira Code',monospace;font-size:10px;font-weight:500;padding:3px 8px;text-transform:uppercase;letter-spacing:0.08em;text-align:center;display:block;}
+.lp0{background:var(--forest);color:#fff;}
+.lp1{background:var(--gold-light);color:var(--gold);}
+.lp2{background:var(--cream-dark);color:var(--ink-30);}
+.gtm-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead tr{border-bottom:2px solid var(--forest);}
+th{padding:8px 12px;text-align:left;font-family:'Fira Code',monospace;font-size:9px;color:var(--ink-30);letter-spacing:0.12em;text-transform:uppercase;font-weight:400;}
+td{padding:10px 12px;color:var(--ink-60);border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5;}
+td:first-child{color:var(--ink);font-weight:500;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--cream-dark);}
+.city-trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:1.5rem;}
+.city-block{background:var(--cream-dark);padding:1.2rem 1.4rem;}
+.city-block.anchor{background:var(--forest);}
+.city-phase{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;}
+.city-block.anchor .city-phase{color:var(--copper);}
+.city-block:not(.anchor) .city-phase{color:var(--ink-30);}
+.city-block h3{font-size:13px;margin-bottom:8px;}
+.city-block.anchor h3{color:#fff;}
+.city-list{list-style:none;font-size:12px;}
+.city-list li{padding:4px 0;border-bottom:1px solid var(--rule);color:var(--ink-60);}
+.city-block.anchor .city-list li{color:rgba(255,255,255,0.55);border-bottom-color:rgba(255,255,255,0.1);}
+.city-list li:last-child{border-bottom:none;}
+.econ-pair{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.econ-block{background:var(--cream-dark);}
+.econ-head{background:var(--forest);padding:10px 16px;}
+.econ-head-label{font-size:12px;font-weight:500;color:#fff;}
+.econ-head-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:1px;}
+.econ-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 16px;border-bottom:1px solid var(--rule);font-size:12px;}
+.econ-row:last-child{border-bottom:none;}
+.econ-key{color:var(--ink-60);}
+.econ-val{font-family:'Fira Code',monospace;font-size:11px;font-weight:500;color:var(--forest);}
+.econ-val.hi{color:var(--copper);}
+.metrics-layout{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.metric-block{background:var(--cream-dark);padding:1rem 1.2rem;}
+.metric-block.star{background:var(--forest);}
+.metric-head{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-30);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--rule);}
+.metric-block.star .metric-head{color:var(--copper);border-bottom-color:rgba(255,255,255,0.1);}
+.m-row{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;border-bottom:1px dotted var(--rule);font-size:11px;}
+.m-row:last-child{border-bottom:none;}
+.m-key{color:var(--ink-60);}
+.metric-block.star .m-key{color:rgba(255,255,255,0.55);}
+.m-val{font-family:'Fira Code',monospace;font-size:10px;font-weight:500;color:var(--forest);}
+.metric-block.star .m-val{color:var(--copper);}
+.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.r-phase{background:var(--cream-dark);padding:1.4rem;}
+.r-phase.now{background:var(--forest);}
+.r-label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper);margin-bottom:4px;}
+.r-title{font-size:13px;font-weight:600;margin-bottom:2px;}
+.r-phase.now .r-title{color:#fff;}
+.r-period{font-size:11px;color:var(--ink-30);margin-bottom:1rem;}
+.r-phase.now .r-period{color:rgba(255,255,255,0.3);}
+.r-items{list-style:none;}
+.r-items li{font-size:11px;color:var(--ink-60);padding:4px 0 4px 12px;border-bottom:1px solid var(--rule);position:relative;line-height:1.4;}
+.r-phase.now .r-items li{color:rgba(255,255,255,0.55);border-bottom-color:rgba(255,255,255,0.08);}
+.r-items li:last-child{border-bottom:none;}
+.r-items li::before{content:'·';position:absolute;left:0;color:var(--copper);}
+.risk-row{display:grid;grid-template-columns:48px 1fr;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--rule);align-items:start;}
+.risk-row:last-child{border-bottom:none;}
+.risk-tag{font-family:'Fira Code',monospace;font-size:9px;font-weight:500;padding:3px 6px;text-transform:uppercase;letter-spacing:0.08em;text-align:center;}
+.rh{background:var(--red-light);color:var(--red);}
+.rm{background:var(--gold-light);color:var(--gold);}
+.rl{background:var(--forest-light);color:var(--forest);}
+.risk-title{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px;}
+.risk-mit{font-size:12px;color:var(--ink-60);line-height:1.55;}
+.validate-pair{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.v-card{background:var(--cream-dark);border-top:2px solid var(--forest);padding:1.2rem 1.4rem;}
+.v-card h3{font-size:13px;margin-bottom:6px;}
+.v-card p{font-size:12px;}
+.badge{display:inline-block;font-size:9px;padding:2px 7px;font-family:'Fira Code',monospace;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;}
+.b-green{background:var(--forest-light);color:var(--forest);}
+.b-copper{background:var(--copper-light);color:var(--copper);}
+footer{background:var(--forest);padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;}
+.footer-l{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.08em;}
+.footer-l strong{color:var(--copper);font-weight:400;}
+@media(max-width:720px){
+  .masthead-grid,.col-layout,.persona-pair,.funnel-layout,.city-trio,.econ-pair,.metrics-layout,.roadmap,.validate-pair{grid-template-columns:1fr;}
+  nav a{display:none;}
+  .masthead{padding:3rem 1.5rem 2.5rem;}
+  .page{padding:2.5rem 1.5rem;}
+  .lever{grid-template-columns:40px 1fr;}
+  .lever-badge{display:none;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">PM Portfolio · <strong>04</strong></div>
+  <a href="#market">Market</a>
+  <a href="#personas">Personas</a>
+  <a href="#funnel">Funnel</a>
+  <a href="#levers">Levers</a>
+  <a href="#gtm">GTM</a>
+  <a href="#metrics">Metrics</a>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-grid">
+    <div>
+      <div class="masthead-eyebrow">Growth Strategy · Fintech · India</div>
+      <h1>Winning<br><em>Tier-2 India</em><br>for Fintech</h1>
+      <p class="masthead-sub">A full acquisition-to-habit growth strategy for a fintech product entering Bharat: market sizing, personas, funnel analysis, growth levers, GTM, and unit economics.</p>
+    </div>
+    <div class="masthead-right">
+      <div class="masthead-stat">
+        <div class="masthead-stat-n">400M+</div>
+        <div class="masthead-stat-l">UPI users in Tier-2/3 cities (2024)</div>
+      </div>
+      <div class="masthead-stat">
+        <div class="masthead-stat-n">₹2.8L Cr</div>
+        <div class="masthead-stat-l">Monthly UPI value from non-metro cities</div>
+      </div>
+      <div class="masthead-stat">
+        <div class="masthead-stat-n">68%</div>
+        <div class="masthead-stat-l">Tier-2/3 users with no credit product</div>
+      </div>
+      <div class="masthead-stat">
+        <div class="masthead-stat-n">3.4x</div>
+        <div class="masthead-stat-l">Higher D30 retention when first txn is within 24h</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="chapter" id="market">
+    <div class="chapter-num">01 · Market Sizing</div>
+    <h2>The numbers behind Bharat</h2>
+    <div class="col-layout">
+      <div>
+        <p>India's fintech story is usually told through Mumbai, Bangalore, and Delhi. But <strong>57% of India's GDP now comes from Tier-2 and Tier-3 cities</strong>, and financial inclusion in these cities is still structurally underserved. The TAM is large and largely unclaimed by product-first fintech companies.</p>
+        <blockquote>
+          <p>"The Tier-2 fintech user isn't financially unsophisticated. They're financially underserved. They manage money carefully, often in cash, because the digital products built for them were designed for someone else."</p>
+          <cite>Thesis statement</cite>
+        </blockquote>
+        <div class="mbar-list" style="margin-top:1.5rem;">
+          <div class="mbar">
+            <div class="mbar-top"><span class="mbar-label">Tier-2/3 smartphone users</span><span class="mbar-val">520M</span></div>
+            <div class="mbar-track"><div class="mbar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="mbar">
+            <div class="mbar-top"><span class="mbar-label">Active UPI users</span><span class="mbar-val">400M</span></div>
+            <div class="mbar-track"><div class="mbar-fill" style="width:77%"></div></div>
+          </div>
+          <div class="mbar">
+            <div class="mbar-top"><span class="mbar-label">No formal credit access</span><span class="mbar-val">272M</span></div>
+            <div class="mbar-track"><div class="mbar-fill" style="width:52%"></div></div>
+          </div>
+          <div class="mbar">
+            <div class="mbar-top"><span class="mbar-label">SMB owners (underserved)</span><span class="mbar-val">63M</span></div>
+            <div class="mbar-track"><div class="mbar-fill" style="width:12%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:12px;color:var(--ink-30);font-family:'Fira Code',monospace;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem;">Serviceable market</p>
+        <p style="font-size:13px;color:var(--ink-60);margin-bottom:1.2rem;">Narrowing to smartphone-literate users with a bank account who transact digitally at least once a month, but have no active fintech product beyond basic UPI payments.</p>
+        <div class="sizing-stack">
+          <div class="sizing-row">
+            <div><div class="sizing-tag">SAM</div><div class="sizing-n">160M</div></div>
+            <div class="sizing-desc">Serviceable users in Tier-2/3 India</div>
+          </div>
+          <div class="sizing-row som">
+            <div><div class="sizing-tag" style="color:var(--copper)">SOM</div><div class="sizing-n">18M</div></div>
+            <div class="sizing-desc">Realistic 3-year target (11% of SAM)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter" id="personas">
+    <div class="chapter-num">02 · User Personas</div>
+    <h2>Two users, two different<br>jobs to be done</h2>
+    <p style="margin-bottom:1.5rem;">Tier-2 India is not one market. The needs of a 26-year-old salaried employee in Indore are quite different from a 38-year-old local grocery store owner in Coimbatore. Most fintech products pick one and underserve the other.</p>
+    <div class="persona-pair">
+      <div class="persona">
+        <div class="persona-head">
+          <div class="p-avatar">👨‍💼</div>
+          <div>
+            <div class="p-name">Rajan, 26 · First-time UPI user</div>
+            <div class="p-role">Junior engineer · Indore · Rs 28,000/month</div>
+          </div>
+        </div>
+        <div>
+          <div class="p-row"><span class="p-key">Goal</span><span class="p-val">Send money home, save a little, maybe get a small loan for a phone upgrade</span></div>
+          <div class="p-row"><span class="p-key">Behaviour</span><span class="p-val">Uses UPI for peer-to-peer transfers. Never touched mutual funds or credit. Wary of apps that ask too many questions.</span></div>
+          <div class="p-row"><span class="p-key">Pain</span><span class="p-val">KYC is confusing. English-only interfaces. Doesn't understand credit score. Afraid of hidden charges.</span></div>
+          <div class="p-row"><span class="p-key">Trigger</span><span class="p-val">A friend refers him to an app that promises Rs 200 cashback on first transaction</span></div>
+          <div class="p-row"><span class="p-key">Language</span><span class="p-val">Hindi preferred. Comfortable with basic English in UI but not in support.</span></div>
+          <div class="p-row"><span class="p-key">Device</span><span class="p-val">Rs 12,000 Android. 4G. Intermittent connectivity.</span></div>
+        </div>
+      </div>
+      <div class="persona">
+        <div class="persona-head">
+          <div class="p-avatar">🏪</div>
+          <div>
+            <div class="p-name">Meenakshi, 38 · Small business owner</div>
+            <div class="p-role">Kirana store owner · Coimbatore · Rs 55,000/month revenue</div>
+          </div>
+        </div>
+        <div>
+          <div class="p-row"><span class="p-key">Goal</span><span class="p-val">Manage daily cash flow, access working capital for restocking, pay suppliers digitally</span></div>
+          <div class="p-row"><span class="p-key">Behaviour</span><span class="p-val">Has a QR code at her counter. Collects UPI payments but still pays suppliers in cash. Has over a year of UPI transaction history but no formal credit record to show a lender.</span></div>
+          <div class="p-row"><span class="p-key">Pain</span><span class="p-val">Can't get a formal loan without collateral. Business cash flow is lumpy. No digital record of transactions to show creditworthiness.</span></div>
+          <div class="p-row"><span class="p-key">Trigger</span><span class="p-val">Her supplier mentions an app that offers short-term working capital loans based on UPI transaction history</span></div>
+          <div class="p-row"><span class="p-key">Language</span><span class="p-val">Tamil. Knows basic Hindi. English is a barrier.</span></div>
+          <div class="p-row"><span class="p-key">Device</span><span class="p-val">Rs 8,000 Android. Feature-phone mindset in terms of data usage.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter" id="funnel">
+    <div class="chapter-num">03 · Funnel Analysis</div>
+    <h2>Where Tier-2 users drop, and why</h2>
+    <p style="margin-bottom:1.5rem;">A standard fintech funnel loses 80-85% of Tier-2 users before their first transaction. The drop-off pattern is different from metro users and needs different fixes.</p>
+    <div class="funnel-layout">
+      <div>
+        <div class="f-bar" style="background:var(--forest);color:#fff;width:100%"><span>Awareness / Install</span><span class="f-pct" style="color:var(--copper)">100%</span></div>
+        <div class="f-drop">down 38% · App store friction, phone storage constraints</div>
+        <div class="f-bar" style="background:var(--forest-mid);color:#fff;width:88%"><span>Onboarding start</span><span class="f-pct">62%</span></div>
+        <div class="f-drop">down 24% · KYC complexity, document confusion</div>
+        <div class="f-bar" style="background:#52796F;color:#fff;width:72%"><span>KYC completed</span><span class="f-pct">38%</span></div>
+        <div class="f-drop">down 18% · Trust gap, no clear next step</div>
+        <div class="f-bar" style="background:#84A98C;color:#fff;width:54%"><span>Account activated</span><span class="f-pct">20%</span></div>
+        <div class="f-drop">down 10% · No compelling reason for first transaction</div>
+        <div class="f-bar" style="background:#B7C9BC;color:var(--ink);width:36%"><span>First transaction</span><span class="f-pct">10%</span></div>
+        <div class="f-drop">down 5% · No habit loop formed</div>
+        <div class="f-bar" style="background:var(--cream-dark);color:var(--ink);width:20%;border:1px solid var(--rule)"><span>D30 active</span><span class="f-pct" style="color:var(--copper)">5%</span></div>
+      </div>
+      <div>
+        <p style="font-family:'Fira Code',monospace;font-size:9px;color:var(--ink-30);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:1rem;">Priority fixes by stage</p>
+        <div class="f-fix"><div class="f-fix-stage">Install drop</div><div class="f-fix-text">Reduce APK size for low-storage devices. Add Lite mode. Optimise for 4G with offline-capable flows.</div></div>
+        <div class="f-fix"><div class="f-fix-stage">KYC drop</div><div class="f-fix-text">Video KYC in Hindi, Tamil, Telugu. Step-by-step document guide with photos. WhatsApp-assisted KYC as fallback.</div></div>
+        <div class="f-fix"><div class="f-fix-stage">Activation drop</div><div class="f-fix-text">Show a personalised credit limit or savings plan immediately after KYC, before asking for any action.</div></div>
+        <div class="f-fix"><div class="f-fix-stage">First transaction</div><div class="f-fix-text">Rs 50-100 cashback on first transaction. WhatsApp nudge 24h after KYC if no transaction. Referral bonus for both parties.</div></div>
+        <div class="f-fix"><div class="f-fix-stage">Habit drop (D30)</div><div class="f-fix-text">Personalised weekly summary ("You saved Rs 340 this week"). Streak reward for 5 consecutive transactions.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter" id="levers">
+    <div class="chapter-num">04 · Growth Levers</div>
+    <h2>Six levers, ranked by<br>impact-to-effort</h2>
+    <p style="margin-bottom:1.5rem;">Tier-2 growth doesn't run on the same playbook as metro fintech. Paid digital CAC doesn't work at the same rates. Trust takes longer to earn. Word-of-mouth and assisted models are where the real leverage is.</p>
+    <div class="lever-list">
+      <div class="lever">
+        <div class="lever-n">01</div>
+        <div>
+          <div class="lever-title">Referral loops, WhatsApp native</div>
+          <div class="lever-desc">Peer referral is the dominant acquisition channel in Tier-2. Design a WhatsApp-first referral flow: one tap sends a pre-written Hindi or regional language message with a personalised link. Both referrer and referee get Rs 75 on first transaction. The message reads like it's from a friend, not an ad.</div>
+          <div class="lever-tags"><span class="ltag ltag-g">Impact: Very High</span><span class="ltag ltag-c">Effort: Low</span><span class="ltag ltag-b">Ships: 3 weeks</span></div>
+        </div>
+        <div><span class="lever-badge lp0">P0</span></div>
+      </div>
+      <div class="lever">
+        <div class="lever-n">02</div>
+        <div>
+          <div class="lever-title">Vernacular-first onboarding</div>
+          <div class="lever-desc">Full Hindi, Tamil, Telugu, and Kannada support across all critical flows: onboarding, KYC, support, and product explanation. Not just translated UI but culturally adapted copy. "EMI" becomes "kistein," "credit score" becomes "financial trust score." Voice input for forms where typing is a barrier.</div>
+          <div class="lever-tags"><span class="ltag ltag-g">Impact: High</span><span class="ltag ltag-c">Effort: Medium</span><span class="ltag ltag-b">Ships: 6 weeks</span></div>
+        </div>
+        <div><span class="lever-badge lp0">P0</span></div>
+      </div>
+      <div class="lever">
+        <div class="lever-n">03</div>
+        <div>
+          <div class="lever-title">Agent and assisted onboarding model</div>
+          <div class="lever-desc">Partner with local grocery stores, mobile repair shops, and Jan Seva Kendras to become assisted onboarding points. A trained local agent walks users through KYC in person. Agent earns Rs 100 per completed onboarding. Some of the strongest Tier-2 growth stories in Indian fintech came from this kind of assisted model, built on local trust rather than digital ad spend.</div>
+          <div class="lever-tags"><span class="ltag ltag-g">Impact: Very High</span><span class="ltag ltag-c">Effort: High</span><span class="ltag ltag-b">Ships: 10 weeks</span></div>
+        </div>
+        <div><span class="lever-badge lp0">P0</span></div>
+      </div>
+      <div class="lever">
+        <div class="lever-n">04</div>
+        <div>
+          <div class="lever-title">UPI transaction history as credit signal</div>
+          <div class="lever-desc">Most Tier-2 users are credit-invisible. No CIBIL score, no formal credit history. But they have 12-18 months of UPI transaction data. Build an alternative credit model using transaction frequency, regularity, and merchant diversity. Offer a small starter credit of Rs 2,000-5,000 after 90 days of active usage. This is the product that earns long-term retention.</div>
+          <div class="lever-tags"><span class="ltag ltag-g">Impact: Very High</span><span class="ltag ltag-c">Effort: Very High</span><span class="ltag ltag-b">Ships: 16 weeks</span></div>
+        </div>
+        <div><span class="lever-badge lp1">P1</span></div>
+      </div>
+      <div class="lever">
+        <div class="lever-n">05</div>
+        <div>
+          <div class="lever-title">Financial literacy content in local language</div>
+          <div class="lever-desc">Short-form video (60 seconds, in local language) explaining one financial concept per week: how to read a bank statement, what a credit score means, how EMIs work. Distributed through WhatsApp and YouTube Shorts. Builds trust before the product ask and frames the brand as an educator rather than just another app.</div>
+          <div class="lever-tags"><span class="ltag ltag-g">Impact: Medium</span><span class="ltag ltag-c">Effort: Low</span><span class="ltag ltag-b">Ships: 4 weeks</span></div>
+        </div>
+        <div><span class="lever-badge lp1">P1</span></div>
+      </div>
+      <div class="lever">
+        <div class="lever-n">06</div>
+        <div>
+          <div class="lever-title">Savings gamification for Rajan persona</div>
+          <div class="lever-desc">A "save Rs 10 a day" micro-savings product with a visual jar that fills up. Milestone rewards at Rs 500, Rs 1,000, Rs 5,000. Shareable achievement cards in WhatsApp-native format. Low friction, daily habit, easy to share with friends.</div>
+          <div class="lever-tags"><span class="ltag ltag-g">Impact: Medium</span><span class="ltag ltag-c">Effort: Medium</span><span class="ltag ltag-b">Ships: 8 weeks</span></div>
+        </div>
+        <div><span class="lever-badge lp2">P2</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter" id="gtm">
+    <div class="chapter-num">05 · Go-to-Market</div>
+    <h2>City-first, then corridor,<br>then national</h2>
+    <p style="margin-bottom:1.5rem;">Don't launch everywhere. Pick 3 anchor cities with strong UPI penetration, existing trust in digital payments, and a dense SMB base. Prove the model works, then expand along economic corridors.</p>
+    <div class="gtm-wrap">
+      <table>
+        <thead><tr><th>Channel</th><th>Target persona</th><th>Mechanic</th><th>CAC target</th><th>Phase</th></tr></thead>
+        <tbody>
+          <tr><td>WhatsApp referral</td><td>Rajan (salaried)</td><td>Pre-written referral message + Rs 75 dual reward</td><td>Rs 80-120</td><td><span class="badge b-copper">Phase 1</span></td></tr>
+          <tr><td>Agent network</td><td>Both personas</td><td>Kirana/JSK partner, Rs 100 per successful KYC</td><td>Rs 150-200</td><td><span class="badge b-copper">Phase 1</span></td></tr>
+          <tr><td>YouTube Shorts / Reels</td><td>Rajan (salaried)</td><td>60-sec Hindi financial literacy videos</td><td>Rs 60-90</td><td><span class="badge b-copper">Phase 1</span></td></tr>
+          <tr><td>Supplier partnerships</td><td>Meenakshi (SMB)</td><td>FMCG distributors recommend app to local grocery store partners</td><td>Rs 100-140</td><td><span class="badge b-green">Phase 2</span></td></tr>
+          <tr><td>Micro-influencers</td><td>Both personas</td><td>Local city-level creators (10K-100K followers)</td><td>Rs 70-110</td><td><span class="badge b-green">Phase 2</span></td></tr>
+          <tr><td>Google UAC (vernacular)</td><td>Rajan (salaried)</td><td>Hindi/Tamil/Telugu app-install campaigns</td><td>Rs 120-180</td><td><span class="badge b-green">Phase 2</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="city-trio">
+      <div class="city-block anchor">
+        <div class="city-phase">Phase 1 · Anchor cities</div>
+        <h3>Start here</h3>
+        <ul class="city-list"><li>Indore (Madhya Pradesh)</li><li>Coimbatore (Tamil Nadu)</li><li>Surat (Gujarat)</li></ul>
+      </div>
+      <div class="city-block">
+        <div class="city-phase">Phase 2 · Expansion</div>
+        <h3>Then these corridors</h3>
+        <ul class="city-list"><li>Indore to Bhopal to Jabalpur</li><li>Coimbatore to Madurai to Trichy</li><li>Surat to Rajkot to Vadodara</li></ul>
+      </div>
+      <div class="city-block">
+        <div class="city-phase">Phase 3 · National</div>
+        <h3>Only after proof</h3>
+        <ul class="city-list"><li>Pan-India agent network</li><li>National TV + OTT (vernacular)</li><li>BNPL product launch</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-num">06 · Unit Economics</div>
+    <h2>The unit economics</h2>
+    <p style="margin-bottom:1.5rem;">Fintech in Tier-2 only works if the numbers hold at lower ARPU. The model below assumes credit as the primary revenue stream.</p>
+    <div class="econ-pair">
+      <div class="econ-block">
+        <div class="econ-head"><div class="econ-head-label">Rajan · Salaried persona</div><div class="econ-head-sub">Referral channel · Lower ARPU · Faster payback</div></div>
+        <div class="econ-row"><span class="econ-key">CAC (referral)</span><span class="econ-val">Rs 95</span></div>
+        <div class="econ-row"><span class="econ-key">ARPU (month 6)</span><span class="econ-val">Rs 180</span></div>
+        <div class="econ-row"><span class="econ-key">Gross margin</span><span class="econ-val">62%</span></div>
+        <div class="econ-row"><span class="econ-key">Payback period</span><span class="econ-val">8 months</span></div>
+        <div class="econ-row"><span class="econ-key">12-month LTV</span><span class="econ-val">Rs 1,440</span></div>
+        <div class="econ-row"><span class="econ-key">LTV:CAC ratio</span><span class="econ-val hi">15:1</span></div>
+      </div>
+      <div class="econ-block">
+        <div class="econ-head"><div class="econ-head-label">Meenakshi · SMB persona</div><div class="econ-head-sub">Agent channel · Higher ARPU · Higher CAC</div></div>
+        <div class="econ-row"><span class="econ-key">CAC (agent)</span><span class="econ-val">Rs 175</span></div>
+        <div class="econ-row"><span class="econ-key">ARPU (month 6)</span><span class="econ-val">Rs 420</span></div>
+        <div class="econ-row"><span class="econ-key">Gross margin</span><span class="econ-val">58%</span></div>
+        <div class="econ-row"><span class="econ-key">Payback period</span><span class="econ-val">7 months</span></div>
+        <div class="econ-row"><span class="econ-key">12-month LTV</span><span class="econ-val">Rs 3,360</span></div>
+        <div class="econ-row"><span class="econ-key">LTV:CAC ratio</span><span class="econ-val hi">19:1</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter" id="metrics">
+    <div class="chapter-num">07 · Success Metrics</div>
+    <h2>North star, primary metrics,<br>and guardrails</h2>
+    <div class="metrics-layout">
+      <div class="metric-block star">
+        <div class="metric-head">North Star</div>
+        <div class="m-row"><span class="m-key">Monthly transacting users</span><span class="m-val">5M by M18</span></div>
+      </div>
+      <div class="metric-block">
+        <div class="metric-head">Acquisition</div>
+        <div class="m-row"><span class="m-key">CAC (blended)</span><span class="m-val">≤ Rs 130</span></div>
+        <div class="m-row"><span class="m-key">KYC completion rate</span><span class="m-val">≥ 55%</span></div>
+        <div class="m-row"><span class="m-key">Referral share of installs</span><span class="m-val">≥ 40%</span></div>
+      </div>
+      <div class="metric-block">
+        <div class="metric-head">Activation</div>
+        <div class="m-row"><span class="m-key">D1 transaction rate</span><span class="m-val">≥ 35%</span></div>
+        <div class="m-row"><span class="m-key">Time to first txn</span><span class="m-val">≤ 24h</span></div>
+        <div class="m-row"><span class="m-key">Onboarding completion</span><span class="m-val">≥ 60%</span></div>
+      </div>
+      <div class="metric-block">
+        <div class="metric-head">Retention</div>
+        <div class="m-row"><span class="m-key">D30 retention</span><span class="m-val">≥ 42%</span></div>
+        <div class="m-row"><span class="m-key">M3 retention</span><span class="m-val">≥ 28%</span></div>
+        <div class="m-row"><span class="m-key">Txns per user/month</span><span class="m-val">≥ 6</span></div>
+      </div>
+      <div class="metric-block">
+        <div class="metric-head">Revenue</div>
+        <div class="m-row"><span class="m-key">ARPU (M6)</span><span class="m-val">≥ Rs 220</span></div>
+        <div class="m-row"><span class="m-key">LTV:CAC ratio</span><span class="m-val">≥ 12:1</span></div>
+        <div class="m-row"><span class="m-key">Credit NPA rate</span><span class="m-val">≤ 4%</span></div>
+      </div>
+      <div class="metric-block">
+        <div class="metric-head">Guardrails</div>
+        <div class="m-row"><span class="m-key">Support CSAT</span><span class="m-val">≥ 4.1/5</span></div>
+        <div class="m-row"><span class="m-key">App crash rate</span><span class="m-val">≤ 0.5%</span></div>
+        <div class="m-row"><span class="m-key">Fraud rate</span><span class="m-val">≤ 0.1%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-num">08 · Roadmap</div>
+    <h2>Three phases, 18 months</h2>
+    <div class="roadmap">
+      <div class="r-phase now">
+        <div class="r-label">Phase 1 · M1-M4</div>
+        <div class="r-title">Foundation and anchor cities</div>
+        <div class="r-period">Months 1-4</div>
+        <ul class="r-items">
+          <li>Vernacular onboarding (Hindi, Tamil, Telugu)</li>
+          <li>WhatsApp referral loop launched</li>
+          <li>Agent network pilot in 3 anchor cities</li>
+          <li>Video KYC in local language</li>
+          <li>Financial literacy video series</li>
+          <li>Lite app for low-storage devices</li>
+        </ul>
+      </div>
+      <div class="r-phase">
+        <div class="r-label">Phase 2 · M5-M10</div>
+        <div class="r-title">Activation and retention depth</div>
+        <div class="r-period">Months 5-10</div>
+        <ul class="r-items">
+          <li>Micro-savings product (Rajan)</li>
+          <li>UPI-based credit scoring model live</li>
+          <li>Starter credit product (Rs 2,000 to Rs 5,000)</li>
+          <li>Supplier partnership channel (Meenakshi)</li>
+          <li>Corridor expansion to 9 cities</li>
+          <li>D30 personalised financial summary</li>
+        </ul>
+      </div>
+      <div class="r-phase">
+        <div class="r-label">Phase 3 · M11-M18</div>
+        <div class="r-title">Scale and monetise</div>
+        <div class="r-period">Months 11-18</div>
+        <ul class="r-items">
+          <li>National agent network (50+ cities)</li>
+          <li>BNPL product for SMB suppliers</li>
+          <li>Insurance bundled with savings</li>
+          <li>Vernacular OTT advertising</li>
+          <li>B2B2C channel via employer payroll</li>
+          <li>Review metrics, plan Series B story</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-num">09 · Risks</div>
+    <h2>What could go wrong</h2>
+    <div>
+      <div class="risk-row"><span class="risk-tag rh">High</span><div><div class="risk-title">KYC drop-off kills the funnel before first transaction</div><div class="risk-mit">WhatsApp-assisted KYC as a fallback. Agent model as a backstop. Reduce required fields to the bare minimum for first-tier approval.</div></div></div>
+      <div class="risk-row"><span class="risk-tag rh">High</span><div><div class="risk-title">Credit NPA rate exceeds model assumptions in Tier-2</div><div class="risk-mit">Require 90 days of UPI history before any credit offer. Cap initial credit at Rs 2,000. Tighten the model using the first 6 months of real data before scaling.</div></div></div>
+      <div class="risk-row"><span class="risk-tag rm">Medium</span><div><div class="risk-title">Referral program attracts low-quality users who churn after cashback</div><div class="risk-mit">Release cashback in two parts: Rs 40 on first transaction, Rs 35 on third. Screens for genuine users and limits gaming.</div></div></div>
+      <div class="risk-row"><span class="risk-tag rm">Medium</span><div><div class="risk-title">Agent network quality is inconsistent across cities</div><div class="risk-mit">Agent rating system with quarterly reviews. Remove agents below 3.5/5. Bonus for agents with 80%+ onboarding completion.</div></div></div>
+      <div class="risk-row"><span class="risk-tag rl">Low</span><div><div class="risk-title">Regulatory change to UPI-based credit scoring</div><div class="risk-mit">Keep a traditional bureau check running as a parallel model. Build consent-based data architecture from day one. Monitor RBI guidelines quarterly.</div></div></div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-num">10 · What I'd Validate First</div>
+    <h2>Assumptions worth testing<br>before scaling</h2>
+    <div class="validate-pair">
+      <div class="v-card">
+        <h3>Agent model CAC assumption</h3>
+        <p>The model assumes Rs 150-200 CAC for agent-assisted onboarding, based on reported costs from assisted onboarding programmes in Indian fintech from 2019-2021. Those numbers may have shifted. I'd run a 4-week agent pilot in one city before committing to the full network build.</p>
+      </div>
+      <div class="v-card">
+        <h3>Vernacular as a conversion driver</h3>
+        <p>The strategy assumes vernacular UI materially improves KYC completion. General research supports this but it needs an A/B test: English UI vs Hindi UI vs voice-assisted UI on the same funnel. Run a 3-way split in week 1 of the pilot.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-l">PM Portfolio · <strong>Project #04</strong> · Fintech Growth Strategy · Tier-2 India</div>
+  <div class="footer-l">Acquisition · Activation · Retention · Revenue</div>
+</footer>
+
+</body>
+</html>
