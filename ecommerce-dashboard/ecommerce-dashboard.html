@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Commerce Growth Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B1120;
+  --navy-2: #111827;
+  --navy-3: #1F2937;
+  --panel: #FFFFFF;
+  --surface: #F8FAFC;
+  --border: #E2E8F0;
+  --border-dark: #CBD5E1;
+  --text: #0F172A;
+  --text-2: #475569;
+  --text-3: #94A3B8;
+  --blue: #3B82F6;
+  --blue-light: #EFF6FF;
+  --blue-mid: #BFDBFE;
+  --green: #10B981;
+  --green-light: #ECFDF5;
+  --red: #EF4444;
+  --red-light: #FEF2F2;
+  --amber: #F59E0B;
+  --amber-light: #FFFBEB;
+  --purple: #8B5CF6;
+  --purple-light: #F5F3FF;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ALERT TICKER */
+.ticker {
+  background: var(--amber);
+  height: 32px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.ticker-label {
+  background: var(--navy);
+  color: var(--amber);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 14px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 6px;
+}
+.ticker-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.ticker-scroll {
+  display: flex;
+  gap: 3rem;
+  animation: scroll 28s linear infinite;
+  white-space: nowrap;
+  padding: 0 2rem;
+}
+@keyframes scroll { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+.tick-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tick-bad { color: #7C2D12; }
+.tick-ok { color: #14532D; }
+
+/* SHELL */
+.shell {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  background: var(--navy-2);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+.sidebar-brand {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.brand-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.brand-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.sidebar-section {
+  padding: 16px 12px 8px;
+}
+.sidebar-section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0 8px;
+  margin-bottom: 6px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s;
+  color: rgba(255,255,255,0.45);
+  font-size: 12px;
+  font-weight: 400;
+  margin-bottom: 2px;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+.nav-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); }
+.nav-item.active { background: rgba(59,130,246,0.15); color: var(--blue); }
+.nav-item.active .nav-icon { color: var(--blue); }
+.nav-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  background: var(--red);
+  color: #fff;
+  border-radius: 10px;
+  padding: 1px 6px;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-chip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.4;
+}
+.footer-chip span { color: var(--blue); font-weight: 500; }
+
+/* MAIN */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--surface);
+}
+
+/* TOPBAR */
+.topbar {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.period-selector {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.period-btn {
+  padding: 5px 12px;
+  font-size: 11px;
+  color: var(--text-2);
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all 0.12s;
+  font-family: 'Inter', sans-serif;
+}
+.period-btn.active { background: var(--blue); color: #fff; }
+.refresh-btn {
+  padding: 6px 12px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* VIEWS */
+.view { display: none; padding: 20px 24px; }
+.view.active { display: block; }
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.kpi-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.kpi-card.blue::before { background: var(--blue); }
+.kpi-card.green::before { background: var(--green); }
+.kpi-card.red::before { background: var(--red); }
+.kpi-card.amber::before { background: var(--amber); }
+.kpi-card.purple::before { background: var(--purple); }
+.kpi-label {
+  font-size: 11px;
+  color: var(--text-3);
+  font-weight: 400;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.kpi-alert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse 1.5s infinite; }
+.kpi-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.kpi-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.kpi-delta {
+  font-size: 11px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.kpi-delta.up { color: var(--green); }
+.kpi-delta.down { color: var(--red); }
+.kpi-delta.warn { color: var(--amber); }
+.sparkline { flex-shrink: 0; }
+
+/* CHARTS ROW */
+.charts-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.chart-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.chart-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.chart-sub { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+.chart-legend {
+  display: flex;
+  gap: 12px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--text-2);
+}
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* BOTTOM GRID */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+/* TABLE */
+.table-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.table-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.t-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.table-inner { }
+.t-row {
+  display: flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.t-row:last-child { border-bottom: none; }
+.t-row:hover { background: var(--surface); }
+.t-name { flex: 1; color: var(--text-2); }
+.t-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text);
+}
+.t-bar-wrap { width: 60px; margin: 0 10px; }
+.t-bar-track { background: var(--border); height: 4px; border-radius: 2px; overflow: hidden; }
+.t-bar-fill { height: 100%; border-radius: 2px; background: var(--blue); }
+.t-delta { font-size: 10px; font-weight: 500; width: 40px; text-align: right; }
+.t-delta.up { color: var(--green); }
+.t-delta.down { color: var(--red); }
+
+/* FUNNEL VIEW */
+.funnel-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.funnel-vis {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+.funnel-stage-wrap { margin-bottom: 6px; }
+.funnel-stage-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  margin-bottom: 4px;
+  color: var(--text-2);
+}
+.funnel-stage-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text);
+}
+.funnel-bar-outer { background: var(--border); height: 28px; border-radius: 4px; overflow: hidden; position: relative; }
+.funnel-bar-inner { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 10px; transition: width 1s ease; }
+.funnel-bar-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #fff;
+}
+.funnel-drop {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--red);
+  text-align: right;
+  margin-bottom: 6px;
+  padding-right: 4px;
+}
+
+/* ALERT VIEW */
+.alert-list { display: flex; flex-direction: column; gap: 10px; }
+.alert-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  transition: border-color 0.15s;
+}
+.alert-card:hover { border-color: var(--border-dark); }
+.alert-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.alert-icon.crit { background: var(--red-light); }
+.alert-icon.warn { background: var(--amber-light); }
+.alert-icon.info { background: var(--blue-light); }
+.alert-metric {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.alert-desc { font-size: 11px; color: var(--text-2); line-height: 1.5; }
+.alert-meta { text-align: right; }
+.alert-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.alert-val.red { color: var(--red); }
+.alert-val.amber { color: var(--amber); }
+.alert-time { font-size: 10px; color: var(--text-3); }
+.alert-threshold {
+  font-size: 10px;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+/* RETENTION VIEW */
+.retention-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.cohort-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.cohort-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 6px 8px;
+  text-align: center;
+  font-weight: 400;
+}
+.cohort-table td {
+  padding: 5px 8px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  border-radius: 3px;
+}
+.cohort-table .cohort-label { text-align: left; color: var(--text-2); font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; }
+
+/* BADGE */
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.badge-blue { background: var(--blue-light); color: var(--blue); }
+.badge-green { background: var(--green-light); color: var(--green); }
+.badge-red { background: var(--red-light); color: var(--red); }
+.badge-amber { background: var(--amber-light); color: var(--amber); }
+
+/* SOURCES VIEW */
+.sources-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.source-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.source-icon { font-size: 20px; margin-bottom: 8px; }
+.source-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.source-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.source-feeds-label {
+  font-size: 10px;
+  color: var(--text-3);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.source-feed {
+  font-size: 11px;
+  color: var(--text-2);
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.source-feed:last-child { border-bottom: none; }
+.source-feed::before { content: '→'; color: var(--blue); font-size: 10px; }
+.source-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  margin-top: 10px;
+  color: var(--green);
+  font-weight: 500;
+}
+.status-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.status-dot.syncing { background: var(--amber); animation: pulse 1s infinite; }
+
+/* SECTION HEADER */
+.section-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.section-hdr-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.section-hdr-sub { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+</style>
+</head>
+<body>
+
+<!-- ALERT TICKER -->
+<div class="ticker">
+  <div class="ticker-label">
+    <div class="ticker-dot"></div>
+    LIVE ALERTS
+  </div>
+  <div class="ticker-scroll">
+    <span class="tick-item tick-bad">🔴 Basket abandonment rate hit 72.4%-threshold 65%-triggered 14 min ago</span>
+    <span class="tick-item tick-bad">🔴 Conversion rate down 1.8pp WoW-now 2.1% vs 3.9% target</span>
+    <span class="tick-item tick-ok">🟢 GMV tracking +11% MoM-on pace for ₹4.2 Cr monthly target</span>
+    <span class="tick-item tick-bad">🟡 Return rate spiking in electronics-18.2% vs 12% threshold</span>
+    <span class="tick-item tick-ok">🟢 D30 retention steady at 34%-within target range</span>
+    <span class="tick-item tick-bad">🔴 Basket abandonment rate hit 72.4%-threshold 65%-triggered 14 min ago</span>
+    <span class="tick-item tick-bad">🔴 Conversion rate down 1.8pp WoW-now 2.1% vs 3.9% target</span>
+    <span class="tick-item tick-ok">🟢 GMV tracking +11% MoM-on pace for ₹4.2 Cr monthly target</span>
+    <span class="tick-item tick-bad">🟡 Return rate spiking in electronics-18.2% vs 12% threshold</span>
+    <span class="tick-item tick-ok">🟢 D30 retention steady at 34%-within target range</span>
+  </div>
+</div>
+
+<div class="shell">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-name">GrowthDesk</div>
+    <div class="brand-sub">E-Commerce · Head of Growth</div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Views</div>
+    <button class="nav-item active" onclick="switchView('overview', this)">
+      <span class="nav-icon">◈</span> Overview
+    </button>
+    <button class="nav-item" onclick="switchView('funnel', this)">
+      <span class="nav-icon">⬡</span> Acquisition Funnel
+    </button>
+    <button class="nav-item" onclick="switchView('retention', this)">
+      <span class="nav-icon">◎</span> Retention Cohorts
+    </button>
+    <button class="nav-item" onclick="switchView('alerts', this)">
+      <span class="nav-icon">◉</span> Alerts
+      <span class="nav-badge">3</span>
+    </button>
+    <button class="nav-item" onclick="switchView('sources', this)">
+      <span class="nav-icon">⬢</span> Data Sources
+    </button>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="footer-chip">
+      PM Portfolio<br>
+      E-Commerce Metrics Dashboard
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div>
+      <div class="topbar-title" id="view-title">Overview-All Metrics</div>
+    </div>
+    <div class="topbar-right">
+      <div class="period-selector">
+        <button class="period-btn" onclick="setPeriod(this)">7D</button>
+        <button class="period-btn active" onclick="setPeriod(this)">30D</button>
+        <button class="period-btn" onclick="setPeriod(this)">90D</button>
+        <button class="period-btn" onclick="setPeriod(this)">YTD</button>
+      </div>
+      <button class="refresh-btn">↻ Refresh</button>
+    </div>
+  </div>
+
+  <!-- ── OVERVIEW VIEW ── -->
+  <div class="view active" id="view-overview">
+
+    <!-- KPI ROW 1 -->
+    <div style="margin-bottom:8px;">
+      <div class="section-hdr">
+        <div>
+          <div class="section-hdr-title">Key Performance Indicators</div>
+          <div class="section-hdr-sub">30-day rolling · updated 4 min ago · 3 alerts active</div>
+        </div>
+        <span class="badge badge-red">3 alerts</span>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card blue">
+        <div class="kpi-label">Gross Merchandise Value <span class="badge badge-blue">Primary</span></div>
+        <div class="kpi-val">₹3.84 Cr</div>
+        <div class="kpi-footer">
+          <div class="kpi-delta up">▲ 11.2% MoM</div>
+          <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
+            <polyline class="spark-line" points="0,20 10,16 20,18 30,10 40,12 50,6 64,4" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
+              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze"/>
+            </polyline>
+            <circle cx="64" cy="4" r="2.5" fill="#3B82F6"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kpi-card red">
+        <div class="kpi-label">Conversion Rate <span class="kpi-alert-dot"></span></div>
+        <div class="kpi-val">2.1%</div>
+        <div class="kpi-footer">
+          <div class="kpi-delta down">▼ 1.8pp WoW · Target 3.9%</div>
+          <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
+            <polyline points="0,4 10,6 20,8 30,10 40,14 50,18 64,22" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
+              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.1s"/>
+            </polyline>
+            <circle cx="64" cy="22" r="2.5" fill="#EF4444"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kpi-card green">
+        <div class="kpi-label">Average Order Value</div>
+        <div class="kpi-val">₹1,240</div>
+        <div class="kpi-footer">
+          <div class="kpi-delta up">▲ 4.3% MoM</div>
+          <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
+            <polyline points="0,18 10,16 20,14 30,15 40,10 50,8 64,6" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
+              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.2s"/>
+            </polyline>
+            <circle cx="64" cy="6" r="2.5" fill="#10B981"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kpi-card amber">
+        <div class="kpi-label">CAC (Blended) <span class="badge badge-amber">Watch</span></div>
+        <div class="kpi-val">₹340</div>
+        <div class="kpi-footer">
+          <div class="kpi-delta warn">▲ 8.1% MoM · LTV:CAC = 3.2x</div>
+          <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
+            <polyline points="0,18 10,17 20,14 30,12 40,10 50,9 64,7" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
+              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.3s"/>
+            </polyline>
+            <circle cx="64" cy="7" r="2.5" fill="#F59E0B"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kpi-card green">
+        <div class="kpi-label">D30 Retention Rate</div>
+        <div class="kpi-val">34.2%</div>
+        <div class="kpi-footer">
+          <div class="kpi-delta up">▲ 2.1pp MoM</div>
+          <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
+            <polyline points="0,20 10,18 20,17 30,14 40,12 50,10 64,8" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
+              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.4s"/>
+            </polyline>
+            <circle cx="64" cy="8" r="2.5" fill="#10B981"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kpi-card red">
+        <div class="kpi-label">Basket Abandonment <span class="kpi-alert-dot"></span></div>
+        <div class="kpi-val">72.4%</div>
+        <div class="kpi-footer">
+          <div class="kpi-delta down">▲ 7.4pp vs threshold 65%</div>
+          <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
+            <polyline points="0,16 10,14 20,12 30,10 40,8 50,6 64,3" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
+              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.5s"/>
+            </polyline>
+            <circle cx="64" cy="3" r="2.5" fill="#EF4444"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kpi-card purple">
+        <div class="kpi-label">Customer LTV (12-month)</div>
+        <div class="kpi-val">₹4,820</div>
+        <div class="kpi-footer">
+          <div class="kpi-delta up">▲ 6.8% QoQ</div>
+          <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
+            <polyline points="0,20 10,17 20,16 30,12 40,10 50,8 64,5" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
+              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.6s"/>
+            </polyline>
+            <circle cx="64" cy="5" r="2.5" fill="#8B5CF6"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kpi-card amber">
+        <div class="kpi-label">Return Rate <span class="kpi-alert-dot"></span></div>
+        <div class="kpi-val">15.6%</div>
+        <div class="kpi-footer">
+          <div class="kpi-delta down">▲ 3.6pp vs 12% threshold</div>
+          <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
+            <polyline points="0,18 10,17 20,15 30,13 40,11 50,8 64,5" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
+              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.7s"/>
+            </polyline>
+            <circle cx="64" cy="5" r="2.5" fill="#F59E0B"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARTS ROW -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">GMV Trend-Last 30 Days</div>
+            <div class="chart-sub">Daily gross merchandise value · ₹ lakhs</div>
+          </div>
+          <div class="chart-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div> GMV</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Orders</div>
+          </div>
+        </div>
+        <svg width="100%" height="140" viewBox="0 0 520 140" preserveAspectRatio="none">
+          <!-- Grid lines -->
+          <line x1="0" y1="28" x2="520" y2="28" stroke="#E2E8F0" stroke-width="0.5"/>
+          <line x1="0" y1="70" x2="520" y2="70" stroke="#E2E8F0" stroke-width="0.5"/>
+          <line x1="0" y1="112" x2="520" y2="112" stroke="#E2E8F0" stroke-width="0.5"/>
+          <!-- Labels -->
+          <text x="0" y="25" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">15L</text>
+          <text x="0" y="67" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">10L</text>
+          <text x="0" y="109" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">5L</text>
+          <!-- Area fill -->
+          <defs>
+            <linearGradient id="gmvGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <polygon points="28,95 62,88 96,72 130,80 164,65 198,70 232,55 266,60 300,45 334,50 368,38 402,42 436,30 470,35 504,28 504,120 28,120" fill="url(#gmvGrad)"/>
+          <!-- GMV Line -->
+          <polyline points="28,95 62,88 96,72 130,80 164,65 198,70 232,55 266,60 300,45 334,50 368,38 402,42 436,30 470,35 504,28" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="600" stroke-dashoffset="600">
+            <animate attributeName="stroke-dashoffset" from="600" to="0" dur="1.5s" fill="freeze"/>
+          </polyline>
+          <!-- Orders line -->
+          <polyline points="28,105 62,100 96,92 130,96 164,88 198,90 232,82 266,85 300,75 334,78 368,68 402,72 436,62 470,65 504,58" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="600" stroke-dashoffset="600">
+            <animate attributeName="stroke-dashoffset" from="600" to="0" dur="1.5s" fill="freeze" begin="0.2s"/>
+          </polyline>
+          <!-- Today marker -->
+          <line x1="504" y1="20" x2="504" y2="120" stroke="#3B82F6" stroke-width="1" stroke-dasharray="3,3"/>
+          <circle cx="504" cy="28" r="3" fill="#3B82F6"/>
+        </svg>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Revenue by Category</div>
+            <div class="chart-sub">30-day share of GMV</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+          <div class="t-row" style="padding:6px 0;border-bottom:1px solid var(--border);">
+            <span class="t-name">Fashion</span>
+            <div class="t-bar-wrap" style="width:80px;"><div class="t-bar-track"><div class="t-bar-fill" style="width:78%;background:var(--blue)"></div></div></div>
+            <span class="t-val">₹1.1 Cr</span>
+            <span class="t-delta up" style="margin-left:8px;">+14%</span>
+          </div>
+          <div class="t-row" style="padding:6px 0;border-bottom:1px solid var(--border);">
+            <span class="t-name">Electronics</span>
+            <div class="t-bar-wrap" style="width:80px;"><div class="t-bar-track"><div class="t-bar-fill" style="width:58%;background:var(--purple)"></div></div></div>
+            <span class="t-val">₹0.84 Cr</span>
+            <span class="t-delta down" style="margin-left:8px;">−3%</span>
+          </div>
+          <div class="t-row" style="padding:6px 0;border-bottom:1px solid var(--border);">
+            <span class="t-name">Home & Living</span>
+            <div class="t-bar-wrap" style="width:80px;"><div class="t-bar-track"><div class="t-bar-fill" style="width:42%;background:var(--green)"></div></div></div>
+            <span class="t-val">₹0.61 Cr</span>
+            <span class="t-delta up" style="margin-left:8px;">+9%</span>
+          </div>
+          <div class="t-row" style="padding:6px 0;border-bottom:1px solid var(--border);">
+            <span class="t-name">Beauty</span>
+            <div class="t-bar-wrap" style="width:80px;"><div class="t-bar-track"><div class="t-bar-fill" style="width:30%;background:var(--amber)"></div></div></div>
+            <span class="t-val">₹0.44 Cr</span>
+            <span class="t-delta up" style="margin-left:8px;">+22%</span>
+          </div>
+          <div class="t-row" style="padding:6px 0;">
+            <span class="t-name">Other</span>
+            <div class="t-bar-wrap" style="width:80px;"><div class="t-bar-track"><div class="t-bar-fill" style="width:18%;background:var(--text-3)"></div></div></div>
+            <span class="t-val">₹0.55 Cr</span>
+            <span class="t-delta" style="margin-left:8px;color:var(--text-3);">+1%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="bottom-grid">
+      <div class="table-card">
+        <div class="table-head">
+          <div class="t-title">Acquisition Channels</div>
+          <span class="badge badge-blue">by CAC</span>
+        </div>
+        <div class="table-inner">
+          <div class="t-row"><span class="t-name">Organic Search</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:90%;background:var(--green)"></div></div></div><span class="t-val">₹180</span><span class="t-delta up">↓ best</span></div>
+          <div class="t-row"><span class="t-name">Referral</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:75%;background:var(--green)"></div></div></div><span class="t-val">₹220</span><span class="t-delta up">↓</span></div>
+          <div class="t-row"><span class="t-name">Email / Push</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:60%;background:var(--blue)"></div></div></div><span class="t-val">₹290</span><span class="t-delta up">↓</span></div>
+          <div class="t-row"><span class="t-name">Paid Social</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:45%;background:var(--amber)"></div></div></div><span class="t-val">₹420</span><span class="t-delta warn">↑</span></div>
+          <div class="t-row"><span class="t-name">Google Ads</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:30%;background:var(--red)"></div></div></div><span class="t-val">₹610</span><span class="t-delta down">↑ worst</span></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head">
+          <div class="t-title">Fulfilment Health</div>
+          <span class="badge badge-green">On track</span>
+        </div>
+        <div class="table-inner">
+          <div class="t-row"><span class="t-name">On-time delivery</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:88%;background:var(--green)"></div></div></div><span class="t-val">88.4%</span><span class="t-delta up">▲</span></div>
+          <div class="t-row"><span class="t-name">Orders shipped D+1</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:74%;background:var(--blue)"></div></div></div><span class="t-val">74.1%</span><span class="t-delta up">▲</span></div>
+          <div class="t-row"><span class="t-name">Return processed</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:68%;background:var(--blue)"></div></div></div><span class="t-val">3.2 days</span><span class="t-delta warn">—</span></div>
+          <div class="t-row"><span class="t-name">Refund rate</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:40%;background:var(--amber)"></div></div></div><span class="t-val">8.1%</span><span class="t-delta down">▲</span></div>
+          <div class="t-row"><span class="t-name">NPS</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:62%;background:var(--green)"></div></div></div><span class="t-val">42</span><span class="t-delta up">▲</span></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head">
+          <div class="t-title">Repeat Purchase</div>
+          <span class="badge badge-blue">by cohort month</span>
+        </div>
+        <div class="table-inner">
+          <div class="t-row"><span class="t-name">M0 → M1</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:42%"></div></div></div><span class="t-val">42.1%</span><span class="t-delta up">▲</span></div>
+          <div class="t-row"><span class="t-name">M1 → M2</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:31%"></div></div></div><span class="t-val">31.4%</span><span class="t-delta up">▲</span></div>
+          <div class="t-row"><span class="t-name">M2 → M3</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:26%"></div></div></div><span class="t-val">26.8%</span><span class="t-delta warn">—</span></div>
+          <div class="t-row"><span class="t-name">M3 → M6</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:20%"></div></div></div><span class="t-val">20.2%</span><span class="t-delta down">▼</span></div>
+          <div class="t-row"><span class="t-name">M6 → M12</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:14%"></div></div></div><span class="t-val">14.6%</span><span class="t-delta down">▼</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FUNNEL VIEW ── -->
+  <div class="view" id="view-funnel">
+    <div class="section-hdr" style="margin-bottom:16px;">
+      <div>
+        <div class="section-hdr-title">Acquisition Funnel</div>
+        <div class="section-hdr-sub">Sessions to purchase · 30-day window · 2.1M sessions</div>
+      </div>
+      <span class="badge badge-red">Conversion alert active</span>
+    </div>
+
+    <div class="funnel-layout">
+      <div class="funnel-vis">
+        <div class="chart-title" style="margin-bottom:16px;">Session to Purchase Funnel</div>
+        <div class="funnel-stage-wrap">
+          <div class="funnel-stage-label"><span>Site Visit / Session</span><span class="funnel-stage-pct">2,100,000</span></div>
+          <div class="funnel-bar-outer"><div class="funnel-bar-inner" style="width:100%;background:var(--blue);"><span class="funnel-bar-num">100%</span></div></div>
+        </div>
+        <div class="funnel-drop">↓ −38% bounce · landing page relevance, load time</div>
+
+        <div class="funnel-stage-wrap">
+          <div class="funnel-stage-label"><span>Product Page View</span><span class="funnel-stage-pct">1,302,000</span></div>
+          <div class="funnel-bar-outer"><div class="funnel-bar-inner" style="width:62%;background:var(--blue);"><span class="funnel-bar-num">62%</span></div></div>
+        </div>
+        <div class="funnel-drop">↓ −26% drop · search relevance, product photography</div>
+
+        <div class="funnel-stage-wrap">
+          <div class="funnel-stage-label"><span>Add to Cart</span><span class="funnel-stage-pct">472,500</span></div>
+          <div class="funnel-bar-outer"><div class="funnel-bar-inner" style="width:36%;background:var(--purple);"><span class="funnel-bar-num">36%</span></div></div>
+        </div>
+        <div class="funnel-drop" style="color:var(--red);font-weight:600;">↓ −72% abandonment ⚠ ALERT-threshold 65%</div>
+
+        <div class="funnel-stage-wrap">
+          <div class="funnel-stage-label"><span>Checkout Start</span><span class="funnel-stage-pct">132,300</span></div>
+          <div class="funnel-bar-outer"><div class="funnel-bar-inner" style="width:10%;background:var(--amber);"><span class="funnel-bar-num">10%</span></div></div>
+        </div>
+        <div class="funnel-drop">↓ −8% drop · payment failures, UX friction</div>
+
+        <div class="funnel-stage-wrap">
+          <div class="funnel-stage-label"><span>Purchase Completed</span><span class="funnel-stage-pct">44,100</span></div>
+          <div class="funnel-bar-outer"><div class="funnel-bar-inner" style="width:2.1%;background:var(--red);min-width:80px;"><span class="funnel-bar-num">2.1%</span></div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="chart-card">
+          <div class="chart-title" style="margin-bottom:12px;">Top Drop-off Fixes</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="padding:10px;background:var(--red-light);border-radius:8px;border-left:3px solid var(--red);">
+              <div style="font-size:11px;font-weight:600;color:var(--red);margin-bottom:3px;">P0 · Basket Abandonment</div>
+              <div style="font-size:11px;color:var(--text-2);">Exit-intent email sequence. Reduce checkout steps from 4 to 2. Add saved cart across devices.</div>
+            </div>
+            <div style="padding:10px;background:var(--red-light);border-radius:8px;border-left:3px solid var(--red);">
+              <div style="font-size:11px;font-weight:600;color:var(--red);margin-bottom:3px;">P0 · Conversion Rate</div>
+              <div style="font-size:11px;color:var(--text-2);">A/B test product page layout. Add size guide. Improve first-image quality. Show reviews above fold.</div>
+            </div>
+            <div style="padding:10px;background:var(--amber-light);border-radius:8px;border-left:3px solid var(--amber);">
+              <div style="font-size:11px;font-weight:600;color:var(--amber);margin-bottom:3px;">P1 · Bounce Rate</div>
+              <div style="font-size:11px;color:var(--text-2);">Improve landing page relevance matching for paid traffic. Reduce LCP to under 2.5s.</div>
+            </div>
+            <div style="padding:10px;background:var(--blue-light);border-radius:8px;border-left:3px solid var(--blue);">
+              <div style="font-size:11px;font-weight:600;color:var(--blue);margin-bottom:3px;">P1 · Payment Drop</div>
+              <div style="font-size:11px;color:var(--text-2);">Add UPI, BNPL, and wallet options. Retry flow for failed payments. Guest checkout default.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RETENTION VIEW ── -->
+  <div class="view" id="view-retention">
+    <div class="section-hdr" style="margin-bottom:16px;">
+      <div>
+        <div class="section-hdr-title">Retention Cohorts</div>
+        <div class="section-hdr-sub">Monthly purchase cohorts · 6-month lookback</div>
+      </div>
+      <span class="badge badge-green">Stable</span>
+    </div>
+
+    <div class="retention-grid">
+      <div class="chart-card" style="grid-column:1/-1;">
+        <div class="chart-title" style="margin-bottom:14px;">Cohort Retention Heatmap-% returning to purchase</div>
+        <div style="overflow-x:auto;">
+          <table class="cohort-table" style="min-width:500px;">
+            <thead>
+              <tr>
+                <th style="text-align:left;">Cohort</th>
+                <th>M0</th><th>M1</th><th>M2</th><th>M3</th><th>M4</th><th>M5</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="cohort-label">Jan 2025</td>
+                <td style="background:#1D4ED8;color:#fff;">100%</td>
+                <td style="background:#3B82F6;color:#fff;">41%</td>
+                <td style="background:#60A5FA;color:#0F172A;">30%</td>
+                <td style="background:#93C5FD;color:#0F172A;">24%</td>
+                <td style="background:#BFDBFE;color:#0F172A;">19%</td>
+                <td style="background:#DBEAFE;color:#0F172A;">14%</td>
+              </tr>
+              <tr>
+                <td class="cohort-label">Feb 2025</td>
+                <td style="background:#1D4ED8;color:#fff;">100%</td>
+                <td style="background:#3B82F6;color:#fff;">43%</td>
+                <td style="background:#60A5FA;color:#0F172A;">32%</td>
+                <td style="background:#93C5FD;color:#0F172A;">25%</td>
+                <td style="background:#BFDBFE;color:#0F172A;">20%</td>
+                <td style="color:var(--text-3);">—</td>
+              </tr>
+              <tr>
+                <td class="cohort-label">Mar 2025</td>
+                <td style="background:#1D4ED8;color:#fff;">100%</td>
+                <td style="background:#2563EB;color:#fff;">45%</td>
+                <td style="background:#3B82F6;color:#fff;">34%</td>
+                <td style="background:#93C5FD;color:#0F172A;">27%</td>
+                <td style="color:var(--text-3);">—</td>
+                <td style="color:var(--text-3);">—</td>
+              </tr>
+              <tr>
+                <td class="cohort-label">Apr 2025</td>
+                <td style="background:#1D4ED8;color:#fff;">100%</td>
+                <td style="background:#2563EB;color:#fff;">42%</td>
+                <td style="background:#60A5FA;color:#0F172A;">31%</td>
+                <td style="color:var(--text-3);">—</td>
+                <td style="color:var(--text-3);">—</td>
+                <td style="color:var(--text-3);">—</td>
+              </tr>
+              <tr>
+                <td class="cohort-label">May 2025</td>
+                <td style="background:#1D4ED8;color:#fff;">100%</td>
+                <td style="background:#2563EB;color:#fff;">44%</td>
+                <td style="color:var(--text-3);">—</td>
+                <td style="color:var(--text-3);">—</td>
+                <td style="color:var(--text-3);">—</td>
+                <td style="color:var(--text-3);">—</td>
+              </tr>
+              <tr>
+                <td class="cohort-label">Jun 2025</td>
+                <td style="background:#1D4ED8;color:#fff;">100%</td>
+                <td style="color:var(--text-3);">—</td>
+                <td style="color:var(--text-3);">—</td>
+                <td style="color:var(--text-3);">—</td>
+                <td style="color:var(--text-3);">—</td>
+                <td style="color:var(--text-3);">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text-3);">Darker blue = higher retention. M1 retention has improved 3pp over 5 cohorts, indicating product and onboarding improvements are holding.</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="chart-card">
+        <div class="chart-title" style="margin-bottom:10px;">Retention Levers</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6;">
+          <div style="padding:6px 0;border-bottom:1px solid var(--border);">→ Personalised reorder reminder at D+14 post purchase</div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border);">→ Loyalty tier unlock at ₹5,000 cumulative spend</div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border);">→ Category affinity-based browse notification</div>
+          <div style="padding:6px 0;">→ Win-back email at D+45 lapsed trigger</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="margin-bottom:10px;">D30 vs Target</div>
+        <div style="text-align:center;padding:10px 0;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:2.8rem;font-weight:500;color:var(--green);line-height:1;">34.2%</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:4px;">Target: 32% · <span style="color:var(--green);font-weight:500;">+2.2pp above target</span></div>
+          <div style="margin-top:14px;background:var(--border);height:6px;border-radius:3px;overflow:hidden;">
+            <div style="width:68%;height:100%;background:var(--green);border-radius:3px;"></div>
+          </div>
+          <div style="font-size:10px;color:var(--text-3);margin-top:4px;">68% of annual retention target achieved</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="margin-bottom:10px;">LTV by Segment</div>
+        <div>
+          <div class="t-row" style="padding:6px 0;border-bottom:1px solid var(--border);"><span class="t-name">Loyal (5+ orders)</span><span class="t-val" style="color:var(--green);">₹8,240</span></div>
+          <div class="t-row" style="padding:6px 0;border-bottom:1px solid var(--border);"><span class="t-name">Occasional (2-4)</span><span class="t-val">₹3,180</span></div>
+          <div class="t-row" style="padding:6px 0;"><span class="t-name">One-time</span><span class="t-val" style="color:var(--red);">₹820</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ALERTS VIEW ── -->
+  <div class="view" id="view-alerts">
+    <div class="section-hdr" style="margin-bottom:16px;">
+      <div>
+        <div class="section-hdr-title">Active Alerts</div>
+        <div class="section-hdr-sub">Threshold breaches · owner assigned · action required</div>
+      </div>
+      <span class="badge badge-red">3 critical</span>
+    </div>
+
+    <div class="alert-list">
+      <div class="alert-card" style="border-left:3px solid var(--red);">
+        <div class="alert-icon crit">🔴</div>
+        <div>
+          <div class="alert-metric">Basket Abandonment Rate</div>
+          <div class="alert-desc">Rate has exceeded the 65% threshold for 3 consecutive days. Primary suspects: checkout friction, payment method gap, and price comparison behaviour. Exit-intent flow is not currently active.</div>
+          <div class="alert-threshold">Threshold: 65% · Owner: Head of Product · Action: A/B test simplified checkout</div>
+        </div>
+        <div class="alert-meta">
+          <div class="alert-val red">72.4%</div>
+          <div class="alert-time">Triggered 14 min ago</div>
+          <div style="margin-top:6px;"><span class="badge badge-red">Critical</span></div>
+        </div>
+      </div>
+
+      <div class="alert-card" style="border-left:3px solid var(--red);">
+        <div class="alert-icon crit">🔴</div>
+        <div>
+          <div class="alert-metric">Conversion Rate-WoW Drop</div>
+          <div class="alert-desc">Conversion rate has dropped 1.8pp week-on-week, now sitting at 2.1% against a 3.9% target. The drop correlates with a product page redesign shipped on Thursday. Rollback option available.</div>
+          <div class="alert-threshold">Threshold: &lt;2.5% triggers alert · Owner: Growth PM · Action: Investigate product page change</div>
+        </div>
+        <div class="alert-meta">
+          <div class="alert-val red">2.1%</div>
+          <div class="alert-time">Triggered 2 hrs ago</div>
+          <div style="margin-top:6px;"><span class="badge badge-red">Critical</span></div>
+        </div>
+      </div>
+
+      <div class="alert-card" style="border-left:3px solid var(--amber);">
+        <div class="alert-icon warn">🟡</div>
+        <div>
+          <div class="alert-metric">Return Rate-Electronics Category</div>
+          <div class="alert-desc">Electronics return rate has risen to 18.2%, above the 12% category threshold. Pattern shows returns concentrated in a single sub-category (TWS earbuds). Likely a product quality or listing accuracy issue.</div>
+          <div class="alert-threshold">Threshold: 12% · Owner: Category Manager · Action: Review top-returned SKUs</div>
+        </div>
+        <div class="alert-meta">
+          <div class="alert-val amber">18.2%</div>
+          <div class="alert-time">Triggered 6 hrs ago</div>
+          <div style="margin-top:6px;"><span class="badge badge-amber">Warning</span></div>
+        </div>
+      </div>
+
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;">
+        <div class="chart-title" style="margin-bottom:12px;">Alert Threshold Reference</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+          <div style="font-size:11px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Conversion</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border);color:var(--text-2);">CVR &lt; 2.5% → alert</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border);color:var(--text-2);">AOV drop &gt;10% → alert</div>
+            <div style="padding:4px 0;color:var(--text-2);">Basket abandon &gt;65% → alert</div>
+          </div>
+          <div style="font-size:11px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Retention</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border);color:var(--text-2);">D30 retention &lt;28% → alert</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border);color:var(--text-2);">M3 repeat &lt;20% → alert</div>
+            <div style="padding:4px 0;color:var(--text-2);">Churn rate &gt;8%/month → alert</div>
+          </div>
+          <div style="font-size:11px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Fulfilment</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border);color:var(--text-2);">On-time delivery &lt;85% → alert</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border);color:var(--text-2);">Return rate &gt;12% → alert</div>
+            <div style="padding:4px 0;color:var(--text-2);">Refund rate &gt;6% → alert</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DATA SOURCES VIEW ── -->
+  <div class="view" id="view-sources">
+    <div class="section-hdr" style="margin-bottom:16px;">
+      <div>
+        <div class="section-hdr-title">Data Sources Map</div>
+        <div class="section-hdr-sub">Where each metric comes from · sync frequency · owner</div>
+      </div>
+      <span class="badge badge-green">All sources healthy</span>
+    </div>
+    <div class="sources-grid">
+      <div class="source-card">
+        <div class="source-icon">🛒</div>
+        <div class="source-name">Order Management System</div>
+        <div class="source-type">Internal · Real-time</div>
+        <div class="source-feeds-label">Feeds</div>
+        <div class="source-feed">GMV, Order count, AOV</div>
+        <div class="source-feed">Basket abandonment events</div>
+        <div class="source-feed">Return and refund data</div>
+        <div class="source-feed">Category-level revenue</div>
+        <div class="source-status"><div class="status-dot"></div> Syncing live</div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon">📊</div>
+        <div class="source-name">Web Analytics</div>
+        <div class="source-type">GA4 / Mixpanel · Hourly</div>
+        <div class="source-feeds-label">Feeds</div>
+        <div class="source-feed">Sessions, bounce rate</div>
+        <div class="source-feed">Funnel drop-off by step</div>
+        <div class="source-feed">Traffic source breakdown</div>
+        <div class="source-feed">Page performance (LCP, CLS)</div>
+        <div class="source-status"><div class="status-dot"></div> Last sync 42 min ago</div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon">💳</div>
+        <div class="source-name">Payment Gateway</div>
+        <div class="source-type">Razorpay / Stripe · Real-time</div>
+        <div class="source-feeds-label">Feeds</div>
+        <div class="source-feed">Conversion rate at checkout</div>
+        <div class="source-feed">Payment failure rate by method</div>
+        <div class="source-feed">Refund volume and reason codes</div>
+        <div class="source-feed">CAC by payment channel</div>
+        <div class="source-status"><div class="status-dot"></div> Syncing live</div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon">📦</div>
+        <div class="source-name">Logistics Partner API</div>
+        <div class="source-type">Shiprocket / Delhivery · 4h</div>
+        <div class="source-feeds-label">Feeds</div>
+        <div class="source-feed">On-time delivery rate</div>
+        <div class="source-feed">Same-day / next-day ship rate</div>
+        <div class="source-feed">Return pickup SLA</div>
+        <div class="source-feed">City-level fulfilment health</div>
+        <div class="source-status"><div class="status-dot syncing"></div> Syncing-3h 12m ago</div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon">👤</div>
+        <div class="source-name">CRM / Customer Data</div>
+        <div class="source-type">Segment / Clevertap · Daily</div>
+        <div class="source-feeds-label">Feeds</div>
+        <div class="source-feed">D30, M3, M6 retention rates</div>
+        <div class="source-feed">Cohort repeat purchase rates</div>
+        <div class="source-feed">Customer LTV by segment</div>
+        <div class="source-feed">Churn prediction scores</div>
+        <div class="source-status"><div class="status-dot"></div> Last sync 6 hrs ago</div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon">📣</div>
+        <div class="source-name">Marketing Attribution</div>
+        <div class="source-type">AppsFlyer / Branch · Daily</div>
+        <div class="source-feeds-label">Feeds</div>
+        <div class="source-feed">CAC by acquisition channel</div>
+        <div class="source-feed">Paid vs organic split</div>
+        <div class="source-feed">Email and push open/click rates</div>
+        <div class="source-feed">ROAS by campaign</div>
+        <div class="source-status"><div class="status-dot"></div> Last sync 8 hrs ago</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+const titles = {
+  overview: 'Overview-All Metrics',
+  funnel: 'Acquisition Funnel',
+  retention: 'Retention Cohorts',
+  alerts: 'Alerts-3 Active',
+  sources: 'Data Sources Map'
+};
+
+function switchView(id, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('view-title').textContent = titles[id];
+}
+
+function setPeriod(btn) {
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
