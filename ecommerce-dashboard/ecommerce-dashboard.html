@@ -620,16 +620,16 @@ body {
     LIVE ALERTS
   </div>
   <div class="ticker-scroll">
-    <span class="tick-item tick-bad">🔴 Basket abandonment rate hit 72.4%-threshold 65%-triggered 14 min ago</span>
-    <span class="tick-item tick-bad">🔴 Conversion rate down 1.8pp WoW-now 2.1% vs 3.9% target</span>
-    <span class="tick-item tick-ok">🟢 GMV tracking +11% MoM-on pace for ₹4.2 Cr monthly target</span>
-    <span class="tick-item tick-bad">🟡 Return rate spiking in electronics-18.2% vs 12% threshold</span>
-    <span class="tick-item tick-ok">🟢 D30 retention steady at 34%-within target range</span>
-    <span class="tick-item tick-bad">🔴 Basket abandonment rate hit 72.4%-threshold 65%-triggered 14 min ago</span>
-    <span class="tick-item tick-bad">🔴 Conversion rate down 1.8pp WoW-now 2.1% vs 3.9% target</span>
-    <span class="tick-item tick-ok">🟢 GMV tracking +11% MoM-on pace for ₹4.2 Cr monthly target</span>
-    <span class="tick-item tick-bad">🟡 Return rate spiking in electronics-18.2% vs 12% threshold</span>
-    <span class="tick-item tick-ok">🟢 D30 retention steady at 34%-within target range</span>
+    <span class="tick-item tick-bad">🔴 Basket abandonment rate hit 72.4% -threshold 65% -triggered 14 min ago</span>
+    <span class="tick-item tick-bad">🔴 Conversion rate down 1.8pp WoW -now 2.1% vs 3.9% target</span>
+    <span class="tick-item tick-ok">🟢 GMV tracking +11% MoM -on pace for ₹4.2 Cr monthly target</span>
+    <span class="tick-item tick-bad">🟡 Return rate spiking in electronics -18.2% vs 12% threshold</span>
+    <span class="tick-item tick-ok">🟢 D30 retention steady at 34% -within target range</span>
+    <span class="tick-item tick-bad">🔴 Basket abandonment rate hit 72.4% -threshold 65% -triggered 14 min ago</span>
+    <span class="tick-item tick-bad">🔴 Conversion rate down 1.8pp WoW -now 2.1% vs 3.9% target</span>
+    <span class="tick-item tick-ok">🟢 GMV tracking +11% MoM -on pace for ₹4.2 Cr monthly target</span>
+    <span class="tick-item tick-bad">🟡 Return rate spiking in electronics -18.2% vs 12% threshold</span>
+    <span class="tick-item tick-ok">🟢 D30 retention steady at 34% -within target range</span>
   </div>
 </div>
 
@@ -676,7 +676,7 @@ body {
   <!-- TOPBAR -->
   <div class="topbar">
     <div>
-      <div class="topbar-title" id="view-title">Overview-All Metrics</div>
+      <div class="topbar-title" id="view-title">Overview -All Metrics</div>
     </div>
     <div class="topbar-right">
       <div class="period-selector">
@@ -697,7 +697,7 @@ body {
       <div class="section-hdr">
         <div>
           <div class="section-hdr-title">Key Performance Indicators</div>
-          <div class="section-hdr-sub">30-day rolling · updated 4 min ago · 3 alerts active</div>
+          <div class="section-hdr-sub" id="kpi-section-sub">30-day rolling · updated 4 min ago · 3 alerts active</div>
         </div>
         <span class="badge badge-red">3 alerts</span>
       </div>
@@ -706,112 +706,96 @@ body {
     <div class="kpi-grid">
       <div class="kpi-card blue">
         <div class="kpi-label">Gross Merchandise Value <span class="badge badge-blue">Primary</span></div>
-        <div class="kpi-val">₹3.84 Cr</div>
+        <div class="kpi-val" id="kpi-gmv-val">₹3.84 Cr</div>
         <div class="kpi-footer">
-          <div class="kpi-delta up">▲ 11.2% MoM</div>
+          <div class="kpi-delta up" id="kpi-gmv-delta">▲ 11.2% MoM</div>
           <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
-            <polyline class="spark-line" points="0,20 10,16 20,18 30,10 40,12 50,6 64,4" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
-              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze"/>
-            </polyline>
-            <circle cx="64" cy="4" r="2.5" fill="#3B82F6"/>
+            <polyline id="spark-gmv" points="0,20 10,16 20,18 30,10 40,12 50,6 64,4" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="spark-gmv-dot" cx="64" cy="4" r="2.5" fill="#3B82F6"/>
           </svg>
         </div>
       </div>
 
       <div class="kpi-card red">
         <div class="kpi-label">Conversion Rate <span class="kpi-alert-dot"></span></div>
-        <div class="kpi-val">2.1%</div>
+        <div class="kpi-val" id="kpi-cvr-val">2.1%</div>
         <div class="kpi-footer">
-          <div class="kpi-delta down">▼ 1.8pp WoW · Target 3.9%</div>
+          <div class="kpi-delta down" id="kpi-cvr-delta">▼ 1.8pp WoW · Target 3.9%</div>
           <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
-            <polyline points="0,4 10,6 20,8 30,10 40,14 50,18 64,22" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
-              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.1s"/>
-            </polyline>
-            <circle cx="64" cy="22" r="2.5" fill="#EF4444"/>
+            <polyline id="spark-cvr" points="0,4 10,6 20,8 30,10 40,14 50,18 64,22" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="spark-cvr-dot" cx="64" cy="22" r="2.5" fill="#EF4444"/>
           </svg>
         </div>
       </div>
 
       <div class="kpi-card green">
         <div class="kpi-label">Average Order Value</div>
-        <div class="kpi-val">₹1,240</div>
+        <div class="kpi-val" id="kpi-aov-val">₹1,240</div>
         <div class="kpi-footer">
-          <div class="kpi-delta up">▲ 4.3% MoM</div>
+          <div class="kpi-delta up" id="kpi-aov-delta">▲ 4.3% MoM</div>
           <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
-            <polyline points="0,18 10,16 20,14 30,15 40,10 50,8 64,6" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
-              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.2s"/>
-            </polyline>
-            <circle cx="64" cy="6" r="2.5" fill="#10B981"/>
+            <polyline id="spark-aov" points="0,18 10,16 20,14 30,15 40,10 50,8 64,6" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="spark-aov-dot" cx="64" cy="6" r="2.5" fill="#10B981"/>
           </svg>
         </div>
       </div>
 
       <div class="kpi-card amber">
         <div class="kpi-label">CAC (Blended) <span class="badge badge-amber">Watch</span></div>
-        <div class="kpi-val">₹340</div>
+        <div class="kpi-val" id="kpi-cac-val">₹340</div>
         <div class="kpi-footer">
-          <div class="kpi-delta warn">▲ 8.1% MoM · LTV:CAC = 3.2x</div>
+          <div class="kpi-delta warn" id="kpi-cac-delta">▲ 8.1% MoM · LTV:CAC = 3.2x</div>
           <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
-            <polyline points="0,18 10,17 20,14 30,12 40,10 50,9 64,7" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
-              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.3s"/>
-            </polyline>
-            <circle cx="64" cy="7" r="2.5" fill="#F59E0B"/>
+            <polyline id="spark-cac" points="0,18 10,17 20,14 30,12 40,10 50,9 64,7" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="spark-cac-dot" cx="64" cy="7" r="2.5" fill="#F59E0B"/>
           </svg>
         </div>
       </div>
 
       <div class="kpi-card green">
         <div class="kpi-label">D30 Retention Rate</div>
-        <div class="kpi-val">34.2%</div>
+        <div class="kpi-val" id="kpi-d30-val">34.2%</div>
         <div class="kpi-footer">
-          <div class="kpi-delta up">▲ 2.1pp MoM</div>
+          <div class="kpi-delta up" id="kpi-d30-delta">▲ 2.1pp MoM</div>
           <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
-            <polyline points="0,20 10,18 20,17 30,14 40,12 50,10 64,8" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
-              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.4s"/>
-            </polyline>
-            <circle cx="64" cy="8" r="2.5" fill="#10B981"/>
+            <polyline id="spark-d30" points="0,20 10,18 20,17 30,14 40,12 50,10 64,8" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="spark-d30-dot" cx="64" cy="8" r="2.5" fill="#10B981"/>
           </svg>
         </div>
       </div>
 
       <div class="kpi-card red">
         <div class="kpi-label">Basket Abandonment <span class="kpi-alert-dot"></span></div>
-        <div class="kpi-val">72.4%</div>
+        <div class="kpi-val" id="kpi-basket-val">72.4%</div>
         <div class="kpi-footer">
-          <div class="kpi-delta down">▲ 7.4pp vs threshold 65%</div>
+          <div class="kpi-delta down" id="kpi-basket-delta">▲ 7.4pp vs threshold 65%</div>
           <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
-            <polyline points="0,16 10,14 20,12 30,10 40,8 50,6 64,3" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
-              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.5s"/>
-            </polyline>
-            <circle cx="64" cy="3" r="2.5" fill="#EF4444"/>
+            <polyline id="spark-basket" points="0,16 10,14 20,12 30,10 40,8 50,6 64,3" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="spark-basket-dot" cx="64" cy="3" r="2.5" fill="#EF4444"/>
           </svg>
         </div>
       </div>
 
       <div class="kpi-card purple">
         <div class="kpi-label">Customer LTV (12-month)</div>
-        <div class="kpi-val">₹4,820</div>
+        <div class="kpi-val" id="kpi-ltv-val">₹4,820</div>
         <div class="kpi-footer">
-          <div class="kpi-delta up">▲ 6.8% QoQ</div>
+          <div class="kpi-delta up" id="kpi-ltv-delta">▲ 6.8% QoQ</div>
           <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
-            <polyline points="0,20 10,17 20,16 30,12 40,10 50,8 64,5" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
-              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.6s"/>
-            </polyline>
-            <circle cx="64" cy="5" r="2.5" fill="#8B5CF6"/>
+            <polyline id="spark-ltv" points="0,20 10,17 20,16 30,12 40,10 50,8 64,5" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="spark-ltv-dot" cx="64" cy="5" r="2.5" fill="#8B5CF6"/>
           </svg>
         </div>
       </div>
 
       <div class="kpi-card amber">
         <div class="kpi-label">Return Rate <span class="kpi-alert-dot"></span></div>
-        <div class="kpi-val">15.6%</div>
+        <div class="kpi-val" id="kpi-return-val">15.6%</div>
         <div class="kpi-footer">
-          <div class="kpi-delta down">▲ 3.6pp vs 12% threshold</div>
+          <div class="kpi-delta down" id="kpi-return-delta">▲ 3.6pp vs 12% threshold</div>
           <svg class="sparkline" width="64" height="24" viewBox="0 0 64 24">
-            <polyline points="0,18 10,17 20,15 30,13 40,11 50,8 64,5" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120">
-              <animate attributeName="stroke-dashoffset" from="120" to="0" dur="1.2s" fill="freeze" begin="0.7s"/>
-            </polyline>
-            <circle cx="64" cy="5" r="2.5" fill="#F59E0B"/>
+            <polyline id="spark-return" points="0,18 10,17 20,15 30,13 40,11 50,8 64,5" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="spark-return-dot" cx="64" cy="5" r="2.5" fill="#F59E0B"/>
           </svg>
         </div>
       </div>
@@ -822,7 +806,7 @@ body {
       <div class="chart-card">
         <div class="chart-header">
           <div>
-            <div class="chart-title">GMV Trend-Last 30 Days</div>
+            <div class="chart-title" id="gmv-chart-title">GMV Trend -Last 30 Days</div>
             <div class="chart-sub">Daily gross merchandise value · ₹ lakhs</div>
           </div>
           <div class="chart-legend">
@@ -865,10 +849,10 @@ body {
         <div class="chart-header">
           <div>
             <div class="chart-title">Revenue by Category</div>
-            <div class="chart-sub">30-day share of GMV</div>
+            <div class="chart-sub" id="revenue-cat-sub">30-day share of GMV</div>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+        <div id="revenue-cat-body" style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
           <div class="t-row" style="padding:6px 0;border-bottom:1px solid var(--border);">
             <span class="t-name">Fashion</span>
             <div class="t-bar-wrap" style="width:80px;"><div class="t-bar-track"><div class="t-bar-fill" style="width:78%;background:var(--blue)"></div></div></div>
@@ -910,7 +894,7 @@ body {
           <div class="t-title">Acquisition Channels</div>
           <span class="badge badge-blue">by CAC</span>
         </div>
-        <div class="table-inner">
+        <div class="table-inner" id="acq-channels-body">
           <div class="t-row"><span class="t-name">Organic Search</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:90%;background:var(--green)"></div></div></div><span class="t-val">₹180</span><span class="t-delta up">↓ best</span></div>
           <div class="t-row"><span class="t-name">Referral</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:75%;background:var(--green)"></div></div></div><span class="t-val">₹220</span><span class="t-delta up">↓</span></div>
           <div class="t-row"><span class="t-name">Email / Push</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:60%;background:var(--blue)"></div></div></div><span class="t-val">₹290</span><span class="t-delta up">↓</span></div>
@@ -924,7 +908,7 @@ body {
           <div class="t-title">Fulfilment Health</div>
           <span class="badge badge-green">On track</span>
         </div>
-        <div class="table-inner">
+        <div class="table-inner" id="fulfilment-body">
           <div class="t-row"><span class="t-name">On-time delivery</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:88%;background:var(--green)"></div></div></div><span class="t-val">88.4%</span><span class="t-delta up">▲</span></div>
           <div class="t-row"><span class="t-name">Orders shipped D+1</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:74%;background:var(--blue)"></div></div></div><span class="t-val">74.1%</span><span class="t-delta up">▲</span></div>
           <div class="t-row"><span class="t-name">Return processed</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:68%;background:var(--blue)"></div></div></div><span class="t-val">3.2 days</span><span class="t-delta warn">—</span></div>
@@ -938,7 +922,7 @@ body {
           <div class="t-title">Repeat Purchase</div>
           <span class="badge badge-blue">by cohort month</span>
         </div>
-        <div class="table-inner">
+        <div class="table-inner" id="repeat-body">
           <div class="t-row"><span class="t-name">M0 → M1</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:42%"></div></div></div><span class="t-val">42.1%</span><span class="t-delta up">▲</span></div>
           <div class="t-row"><span class="t-name">M1 → M2</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:31%"></div></div></div><span class="t-val">31.4%</span><span class="t-delta up">▲</span></div>
           <div class="t-row"><span class="t-name">M2 → M3</span><div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:26%"></div></div></div><span class="t-val">26.8%</span><span class="t-delta warn">—</span></div>
@@ -978,7 +962,7 @@ body {
           <div class="funnel-stage-label"><span>Add to Cart</span><span class="funnel-stage-pct">472,500</span></div>
           <div class="funnel-bar-outer"><div class="funnel-bar-inner" style="width:36%;background:var(--purple);"><span class="funnel-bar-num">36%</span></div></div>
         </div>
-        <div class="funnel-drop" style="color:var(--red);font-weight:600;">↓ −72% abandonment ⚠ ALERT-threshold 65%</div>
+        <div class="funnel-drop" style="color:var(--red);font-weight:600;">↓ −72% abandonment ⚠ ALERT -threshold 65%</div>
 
         <div class="funnel-stage-wrap">
           <div class="funnel-stage-label"><span>Checkout Start</span><span class="funnel-stage-pct">132,300</span></div>
@@ -1030,7 +1014,7 @@ body {
 
     <div class="retention-grid">
       <div class="chart-card" style="grid-column:1/-1;">
-        <div class="chart-title" style="margin-bottom:14px;">Cohort Retention Heatmap-% returning to purchase</div>
+        <div class="chart-title" style="margin-bottom:14px;">Cohort Retention Heatmap -% returning to purchase</div>
         <div style="overflow-x:auto;">
           <table class="cohort-table" style="min-width:500px;">
             <thead>
@@ -1161,7 +1145,7 @@ body {
       <div class="alert-card" style="border-left:3px solid var(--red);">
         <div class="alert-icon crit">🔴</div>
         <div>
-          <div class="alert-metric">Conversion Rate-WoW Drop</div>
+          <div class="alert-metric">Conversion Rate -WoW Drop</div>
           <div class="alert-desc">Conversion rate has dropped 1.8pp week-on-week, now sitting at 2.1% against a 3.9% target. The drop correlates with a product page redesign shipped on Thursday. Rollback option available.</div>
           <div class="alert-threshold">Threshold: &lt;2.5% triggers alert · Owner: Growth PM · Action: Investigate product page change</div>
         </div>
@@ -1175,7 +1159,7 @@ body {
       <div class="alert-card" style="border-left:3px solid var(--amber);">
         <div class="alert-icon warn">🟡</div>
         <div>
-          <div class="alert-metric">Return Rate-Electronics Category</div>
+          <div class="alert-metric">Return Rate -Electronics Category</div>
           <div class="alert-desc">Electronics return rate has risen to 18.2%, above the 12% category threshold. Pattern shows returns concentrated in a single sub-category (TWS earbuds). Likely a product quality or listing accuracy issue.</div>
           <div class="alert-threshold">Threshold: 12% · Owner: Category Manager · Action: Review top-returned SKUs</div>
         </div>
@@ -1264,7 +1248,7 @@ body {
         <div class="source-feed">Same-day / next-day ship rate</div>
         <div class="source-feed">Return pickup SLA</div>
         <div class="source-feed">City-level fulfilment health</div>
-        <div class="source-status"><div class="status-dot syncing"></div> Syncing-3h 12m ago</div>
+        <div class="source-status"><div class="status-dot syncing"></div> Syncing -3h 12m ago</div>
       </div>
       <div class="source-card">
         <div class="source-icon">👤</div>
@@ -1296,13 +1280,323 @@ body {
 
 <script>
 const titles = {
-  overview: 'Overview-All Metrics',
+  overview: 'Overview -All Metrics',
   funnel: 'Acquisition Funnel',
   retention: 'Retention Cohorts',
-  alerts: 'Alerts-3 Active',
+  alerts: 'Alerts -3 Active',
   sources: 'Data Sources Map'
 };
 
+// ── PERIOD DATA ──────────────────────────────────────────────
+const periodData = {
+  '7D': {
+    sub: '7-day window · updated 4 min ago · 3 alerts active',
+    chartTitle: 'GMV Trend -Last 7 Days',
+    kpis: {
+      gmv:    { val: '₹88.4L',   delta: '▲ 4.2% WoW',              cls: 'up' },
+      cvr:    { val: '1.9%',     delta: '▼ 0.3pp WoW · Target 3.9%', cls: 'down' },
+      aov:    { val: '₹1,190',   delta: '▼ 1.2% WoW',               cls: 'down' },
+      cac:    { val: '₹360',     delta: '▲ 3.1% WoW · LTV:CAC = 3.0x', cls: 'warn' },
+      d30:    { val: '34.2%',    delta: '▲ 0.4pp WoW',              cls: 'up' },
+      basket: { val: '73.1%',    delta: '▲ 8.1pp vs threshold 65%',  cls: 'down' },
+      ltv:    { val: '₹4,820',   delta: '▲ 6.8% QoQ',               cls: 'up' },
+      return: { val: '16.2%',    delta: '▲ 4.2pp vs 12% threshold',  cls: 'down' }
+    },
+    sparks: {
+      gmv:    { pts: '0,14 10,12 20,16 30,10 40,13 50,9 64,7',   cy: 7  },
+      cvr:    { pts: '0,8  10,10 20,12 30,14 40,18 50,20 64,22', cy: 22 },
+      aov:    { pts: '0,10 10,12 20,11 30,14 40,13 50,15 64,16', cy: 16 },
+      cac:    { pts: '0,14 10,12 20,11 30,10 40,9  50,8  64,7',  cy: 7  },
+      d30:    { pts: '0,14 10,13 20,12 30,12 40,11 50,10 64,9',  cy: 9  },
+      basket: { pts: '0,14 10,12 20,10 30,8  40,7  50,5  64,3',  cy: 3  },
+      ltv:    { pts: '0,20 10,17 20,16 30,12 40,10 50,8  64,5',  cy: 5  },
+      return: { pts: '0,14 10,12 20,10 30,8  40,7  50,6  64,4',  cy: 4  }
+    }
+  },
+  '30D': {
+    sub: '30-day rolling · updated 4 min ago · 3 alerts active',
+    chartTitle: 'GMV Trend -Last 30 Days',
+    kpis: {
+      gmv:    { val: '₹3.84 Cr', delta: '▲ 11.2% MoM',             cls: 'up' },
+      cvr:    { val: '2.1%',     delta: '▼ 1.8pp WoW · Target 3.9%', cls: 'down' },
+      aov:    { val: '₹1,240',   delta: '▲ 4.3% MoM',               cls: 'up' },
+      cac:    { val: '₹340',     delta: '▲ 8.1% MoM · LTV:CAC = 3.2x', cls: 'warn' },
+      d30:    { val: '34.2%',    delta: '▲ 2.1pp MoM',              cls: 'up' },
+      basket: { val: '72.4%',    delta: '▲ 7.4pp vs threshold 65%',  cls: 'down' },
+      ltv:    { val: '₹4,820',   delta: '▲ 6.8% QoQ',               cls: 'up' },
+      return: { val: '15.6%',    delta: '▲ 3.6pp vs 12% threshold',  cls: 'down' }
+    },
+    sparks: {
+      gmv:    { pts: '0,20 10,16 20,18 30,10 40,12 50,6  64,4',  cy: 4  },
+      cvr:    { pts: '0,4  10,6  20,8  30,10 40,14 50,18 64,22', cy: 22 },
+      aov:    { pts: '0,18 10,16 20,14 30,15 40,10 50,8  64,6',  cy: 6  },
+      cac:    { pts: '0,18 10,17 20,14 30,12 40,10 50,9  64,7',  cy: 7  },
+      d30:    { pts: '0,20 10,18 20,17 30,14 40,12 50,10 64,8',  cy: 8  },
+      basket: { pts: '0,16 10,14 20,12 30,10 40,8  50,6  64,3',  cy: 3  },
+      ltv:    { pts: '0,20 10,17 20,16 30,12 40,10 50,8  64,5',  cy: 5  },
+      return: { pts: '0,18 10,17 20,15 30,13 40,11 50,8  64,5',  cy: 5  }
+    }
+  },
+  '90D': {
+    sub: '90-day window · updated 4 min ago · 2 alerts active',
+    chartTitle: 'GMV Trend -Last 90 Days',
+    kpis: {
+      gmv:    { val: '₹11.2 Cr', delta: '▲ 18.4% QoQ',             cls: 'up' },
+      cvr:    { val: '2.8%',     delta: '▼ 0.4pp QoQ · Target 3.9%', cls: 'down' },
+      aov:    { val: '₹1,180',   delta: '▲ 2.1% QoQ',               cls: 'up' },
+      cac:    { val: '₹310',     delta: '▲ 5.2% QoQ · LTV:CAC = 3.5x', cls: 'warn' },
+      d30:    { val: '32.8%',    delta: '▲ 4.2pp QoQ',              cls: 'up' },
+      basket: { val: '68.4%',    delta: '▲ 3.4pp vs threshold 65%',  cls: 'down' },
+      ltv:    { val: '₹4,820',   delta: '▲ 6.8% QoQ',               cls: 'up' },
+      return: { val: '13.2%',    delta: '▲ 1.2pp vs 12% threshold',  cls: 'down' }
+    },
+    sparks: {
+      gmv:    { pts: '0,22 10,20 20,17 30,14 40,12 50,8  64,4',  cy: 4  },
+      cvr:    { pts: '0,8  10,10 20,11 30,12 40,14 50,16 64,18', cy: 18 },
+      aov:    { pts: '0,20 10,18 20,16 30,14 40,12 50,10 64,8',  cy: 8  },
+      cac:    { pts: '0,20 10,18 20,15 30,13 40,11 50,9  64,8',  cy: 8  },
+      d30:    { pts: '0,22 10,20 20,18 30,15 40,13 50,11 64,8',  cy: 8  },
+      basket: { pts: '0,12 10,11 20,10 30,9  40,8  50,7  64,6',  cy: 6  },
+      ltv:    { pts: '0,20 10,18 20,16 30,13 40,11 50,8  64,5',  cy: 5  },
+      return: { pts: '0,10 10,9  20,9  30,8  40,8  50,7  64,7',  cy: 7  }
+    }
+  },
+  'YTD': {
+    sub: 'Year to date · updated 4 min ago · 1 alert active',
+    chartTitle: 'GMV Trend -Year to Date',
+    kpis: {
+      gmv:    { val: '₹38.6 Cr', delta: '▲ 24.1% YoY',             cls: 'up' },
+      cvr:    { val: '3.1%',     delta: '▼ 0.8pp YoY · Target 3.9%', cls: 'down' },
+      aov:    { val: '₹1,150',   delta: '▲ 7.4% YoY',               cls: 'up' },
+      cac:    { val: '₹290',     delta: '▼ 4.2% YoY · LTV:CAC = 3.8x', cls: 'up' },
+      d30:    { val: '31.4%',    delta: '▲ 6.8pp YoY',              cls: 'up' },
+      basket: { val: '66.2%',    delta: '▲ 1.2pp vs threshold 65%',  cls: 'down' },
+      ltv:    { val: '₹4,820',   delta: '▲ 14.2% YoY',              cls: 'up' },
+      return: { val: '12.8%',    delta: '▲ 0.8pp vs 12% threshold',  cls: 'down' }
+    },
+    sparks: {
+      gmv:    { pts: '0,22 10,20 20,18 30,15 40,12 50,8  64,4',  cy: 4  },
+      cvr:    { pts: '0,6  10,8  20,9  30,10 40,11 50,12 64,14', cy: 14 },
+      aov:    { pts: '0,22 10,20 20,18 30,16 40,13 50,10 64,7',  cy: 7  },
+      cac:    { pts: '0,6  10,7  20,8  30,9  40,10 50,11 64,12', cy: 12 },
+      d30:    { pts: '0,22 10,19 20,17 30,14 40,12 50,10 64,7',  cy: 7  },
+      basket: { pts: '0,8  10,8  20,9  30,8  40,9  50,8  64,8',  cy: 8  },
+      ltv:    { pts: '0,22 10,19 20,17 30,14 40,11 50,8  64,5',  cy: 5  },
+      return: { pts: '0,8  10,8  20,9  30,9  40,8  50,8  64,8',  cy: 8  }
+    }
+  }
+};
+
+// ── RENDER HELPERS ────────────────────────────────────────────
+function renderBarRows(containerId, rows) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = rows.map((r, i) => {
+    const border = i < rows.length - 1 ? 'border-bottom:1px solid var(--border);' : '';
+    return `<div class="t-row" style="padding:6px 0;${border}">
+      <span class="t-name">${r.name}</span>
+      <div class="t-bar-wrap" style="width:80px;"><div class="t-bar-track"><div class="t-bar-fill" style="width:${r.pct}%;background:${r.clr}"></div></div></div>
+      <span class="t-val">${r.val}</span>
+      <span class="t-delta ${r.dcls}" style="margin-left:8px;">${r.delta}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderFulfilmentRows(containerId, rows) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = rows.map(r =>
+    `<div class="t-row"><span class="t-name">${r.name}</span>
+      <div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:${r.pct}%;background:${r.clr}"></div></div></div>
+      <span class="t-val">${r.val}</span>
+      <span class="t-delta ${r.dcls}">${r.delta}</span>
+    </div>`
+  ).join('');
+}
+
+function renderSimpleRows(containerId, rows) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = rows.map(r =>
+    `<div class="t-row"><span class="t-name">${r.name}</span>
+      <div class="t-bar-wrap"><div class="t-bar-track"><div class="t-bar-fill" style="width:${r.pct}%"></div></div></div>
+      <span class="t-val">${r.val}</span>
+      <span class="t-delta ${r.dcls}">${r.delta}</span>
+    </div>`
+  ).join('');
+}
+
+// ── TABLES DATA ───────────────────────────────────────────────
+const tableData = {
+  '7D': {
+    revCatSub: '7-day share of GMV',
+    revCat: [
+      { name:'Fashion',      val:'₹25.2L', pct:78, clr:'var(--blue)',   delta:'+8%',  dcls:'up' },
+      { name:'Electronics',  val:'₹19.3L', pct:60, clr:'var(--purple)', delta:'−5%',  dcls:'down' },
+      { name:'Home & Living',val:'₹14.1L', pct:44, clr:'var(--green)',  delta:'+6%',  dcls:'up' },
+      { name:'Beauty',       val:'₹10.1L', pct:31, clr:'var(--amber)',  delta:'+18%', dcls:'up' },
+      { name:'Other',        val:'₹12.6L', pct:18, clr:'var(--text-3)', delta:'−2%',  dcls:'down' }
+    ],
+    acq: [
+      { name:'Organic Search', val:'₹175', pct:90, clr:'var(--green)', delta:'↓ best', dcls:'up' },
+      { name:'Referral',       val:'₹215', pct:74, clr:'var(--green)', delta:'↓',      dcls:'up' },
+      { name:'Email / Push',   val:'₹280', pct:58, clr:'var(--blue)',  delta:'↓',      dcls:'up' },
+      { name:'Paid Social',    val:'₹440', pct:42, clr:'var(--amber)', delta:'↑',      dcls:'warn' },
+      { name:'Google Ads',     val:'₹650', pct:28, clr:'var(--red)',   delta:'↑ worst',dcls:'down' }
+    ],
+    fulfilment: [
+      { name:'On-time delivery',   val:'86.2%',   pct:86, clr:'var(--green)', delta:'▼', dcls:'down' },
+      { name:'Orders shipped D+1', val:'71.4%',   pct:71, clr:'var(--blue)',  delta:'▼', dcls:'down' },
+      { name:'Return processed',   val:'3.4 days',pct:60, clr:'var(--blue)',  delta:'▲', dcls:'down' },
+      { name:'Refund rate',        val:'8.8%',    pct:44, clr:'var(--amber)', delta:'▲', dcls:'down' },
+      { name:'NPS',                val:'40',       pct:58, clr:'var(--green)', delta:'▼', dcls:'down' }
+    ],
+    repeat: [
+      { name:'M0 → M1', val:'40.2%', pct:40, delta:'▼', dcls:'down' },
+      { name:'M1 → M2', val:'29.8%', pct:30, delta:'▼', dcls:'down' },
+      { name:'M2 → M3', val:'25.1%', pct:25, delta:'—', dcls:'warn' },
+      { name:'M3 → M6', val:'18.9%', pct:19, delta:'▼', dcls:'down' },
+      { name:'M6 → M12',val:'13.2%', pct:13, delta:'▼', dcls:'down' }
+    ]
+  },
+  '30D': {
+    revCatSub: '30-day share of GMV',
+    revCat: [
+      { name:'Fashion',      val:'₹1.1 Cr',  pct:78, clr:'var(--blue)',   delta:'+14%', dcls:'up' },
+      { name:'Electronics',  val:'₹0.84 Cr', pct:58, clr:'var(--purple)', delta:'−3%',  dcls:'down' },
+      { name:'Home & Living',val:'₹0.61 Cr', pct:42, clr:'var(--green)',  delta:'+9%',  dcls:'up' },
+      { name:'Beauty',       val:'₹0.44 Cr', pct:30, clr:'var(--amber)',  delta:'+22%', dcls:'up' },
+      { name:'Other',        val:'₹0.55 Cr', pct:18, clr:'var(--text-3)', delta:'+1%',  dcls:'' }
+    ],
+    acq: [
+      { name:'Organic Search', val:'₹180', pct:90, clr:'var(--green)', delta:'↓ best', dcls:'up' },
+      { name:'Referral',       val:'₹220', pct:75, clr:'var(--green)', delta:'↓',      dcls:'up' },
+      { name:'Email / Push',   val:'₹290', pct:60, clr:'var(--blue)',  delta:'↓',      dcls:'up' },
+      { name:'Paid Social',    val:'₹420', pct:45, clr:'var(--amber)', delta:'↑',      dcls:'warn' },
+      { name:'Google Ads',     val:'₹610', pct:30, clr:'var(--red)',   delta:'↑ worst',dcls:'down' }
+    ],
+    fulfilment: [
+      { name:'On-time delivery',   val:'88.4%',   pct:88, clr:'var(--green)', delta:'▲', dcls:'up' },
+      { name:'Orders shipped D+1', val:'74.1%',   pct:74, clr:'var(--blue)',  delta:'▲', dcls:'up' },
+      { name:'Return processed',   val:'3.2 days',pct:68, clr:'var(--blue)',  delta:'—', dcls:'warn' },
+      { name:'Refund rate',        val:'8.1%',    pct:40, clr:'var(--amber)', delta:'▲', dcls:'down' },
+      { name:'NPS',                val:'42',       pct:62, clr:'var(--green)', delta:'▲', dcls:'up' }
+    ],
+    repeat: [
+      { name:'M0 → M1', val:'42.1%', pct:42, delta:'▲', dcls:'up' },
+      { name:'M1 → M2', val:'31.4%', pct:31, delta:'▲', dcls:'up' },
+      { name:'M2 → M3', val:'26.8%', pct:27, delta:'—', dcls:'warn' },
+      { name:'M3 → M6', val:'20.2%', pct:20, delta:'▼', dcls:'down' },
+      { name:'M6 → M12',val:'14.6%', pct:15, delta:'▼', dcls:'down' }
+    ]
+  },
+  '90D': {
+    revCatSub: '90-day share of GMV',
+    revCat: [
+      { name:'Fashion',      val:'₹3.2 Cr', pct:80, clr:'var(--blue)',   delta:'+12%', dcls:'up' },
+      { name:'Electronics',  val:'₹2.5 Cr', pct:62, clr:'var(--purple)', delta:'+2%',  dcls:'up' },
+      { name:'Home & Living',val:'₹1.8 Cr', pct:45, clr:'var(--green)',  delta:'+11%', dcls:'up' },
+      { name:'Beauty',       val:'₹1.2 Cr', pct:32, clr:'var(--amber)',  delta:'+28%', dcls:'up' },
+      { name:'Other',        val:'₹1.6 Cr', pct:20, clr:'var(--text-3)', delta:'+4%',  dcls:'' }
+    ],
+    acq: [
+      { name:'Organic Search', val:'₹170', pct:92, clr:'var(--green)', delta:'↓ best', dcls:'up' },
+      { name:'Referral',       val:'₹210', pct:78, clr:'var(--green)', delta:'↓',      dcls:'up' },
+      { name:'Email / Push',   val:'₹270', pct:62, clr:'var(--blue)',  delta:'↓',      dcls:'up' },
+      { name:'Paid Social',    val:'₹390', pct:46, clr:'var(--amber)', delta:'↑',      dcls:'warn' },
+      { name:'Google Ads',     val:'₹580', pct:32, clr:'var(--red)',   delta:'↑ worst',dcls:'down' }
+    ],
+    fulfilment: [
+      { name:'On-time delivery',   val:'90.1%',   pct:90, clr:'var(--green)', delta:'▲', dcls:'up' },
+      { name:'Orders shipped D+1', val:'76.8%',   pct:77, clr:'var(--blue)',  delta:'▲', dcls:'up' },
+      { name:'Return processed',   val:'2.9 days',pct:72, clr:'var(--green)', delta:'▲', dcls:'up' },
+      { name:'Refund rate',        val:'7.4%',    pct:37, clr:'var(--amber)', delta:'▼', dcls:'up' },
+      { name:'NPS',                val:'44',       pct:65, clr:'var(--green)', delta:'▲', dcls:'up' }
+    ],
+    repeat: [
+      { name:'M0 → M1', val:'43.8%', pct:44, delta:'▲', dcls:'up' },
+      { name:'M1 → M2', val:'32.9%', pct:33, delta:'▲', dcls:'up' },
+      { name:'M2 → M3', val:'28.1%', pct:28, delta:'▲', dcls:'up' },
+      { name:'M3 → M6', val:'21.4%', pct:21, delta:'▲', dcls:'up' },
+      { name:'M6 → M12',val:'15.8%', pct:16, delta:'▲', dcls:'up' }
+    ]
+  },
+  'YTD': {
+    revCatSub: 'YTD share of GMV',
+    revCat: [
+      { name:'Fashion',      val:'₹11.4 Cr', pct:82, clr:'var(--blue)',   delta:'+19%', dcls:'up' },
+      { name:'Electronics',  val:'₹8.7 Cr',  pct:65, clr:'var(--purple)', delta:'+8%',  dcls:'up' },
+      { name:'Home & Living',val:'₹6.2 Cr',  pct:48, clr:'var(--green)',  delta:'+15%', dcls:'up' },
+      { name:'Beauty',       val:'₹4.1 Cr',  pct:34, clr:'var(--amber)',  delta:'+34%', dcls:'up' },
+      { name:'Other',        val:'₹5.6 Cr',  pct:22, clr:'var(--text-3)', delta:'+6%',  dcls:'' }
+    ],
+    acq: [
+      { name:'Organic Search', val:'₹165', pct:94, clr:'var(--green)', delta:'↓ best', dcls:'up' },
+      { name:'Referral',       val:'₹200', pct:80, clr:'var(--green)', delta:'↓',      dcls:'up' },
+      { name:'Email / Push',   val:'₹260', pct:64, clr:'var(--blue)',  delta:'↓',      dcls:'up' },
+      { name:'Paid Social',    val:'₹370', pct:48, clr:'var(--amber)', delta:'↑',      dcls:'warn' },
+      { name:'Google Ads',     val:'₹540', pct:34, clr:'var(--red)',   delta:'↑ worst',dcls:'down' }
+    ],
+    fulfilment: [
+      { name:'On-time delivery',   val:'91.4%',   pct:91, clr:'var(--green)', delta:'▲', dcls:'up' },
+      { name:'Orders shipped D+1', val:'78.2%',   pct:78, clr:'var(--blue)',  delta:'▲', dcls:'up' },
+      { name:'Return processed',   val:'2.7 days',pct:76, clr:'var(--green)', delta:'▲', dcls:'up' },
+      { name:'Refund rate',        val:'6.8%',    pct:34, clr:'var(--green)', delta:'▼', dcls:'up' },
+      { name:'NPS',                val:'46',       pct:68, clr:'var(--green)', delta:'▲', dcls:'up' }
+    ],
+    repeat: [
+      { name:'M0 → M1', val:'44.2%', pct:44, delta:'▲', dcls:'up' },
+      { name:'M1 → M2', val:'33.6%', pct:34, delta:'▲', dcls:'up' },
+      { name:'M2 → M3', val:'28.8%', pct:29, delta:'▲', dcls:'up' },
+      { name:'M3 → M6', val:'22.1%', pct:22, delta:'▲', dcls:'up' },
+      { name:'M6 → M12',val:'16.4%', pct:16, delta:'▲', dcls:'up' }
+    ]
+  }
+};
+
+// ── UPDATE KPI CARDS ─────────────────────────────────────────
+function applyPeriod(period) {
+  const d = periodData[period];
+  const t = tableData[period];
+  if (!d) return;
+
+  // Section sub-header + chart title
+  document.getElementById('kpi-section-sub').textContent = d.sub;
+  document.getElementById('gmv-chart-title').textContent = d.chartTitle;
+
+  // KPI cards + sparklines
+  const keys = ['gmv','cvr','aov','cac','d30','basket','ltv','return'];
+  keys.forEach(k => {
+    const valEl   = document.getElementById('kpi-' + k + '-val');
+    const deltaEl = document.getElementById('kpi-' + k + '-delta');
+    if (!valEl || !deltaEl) return;
+    valEl.textContent   = d.kpis[k].val;
+    deltaEl.textContent = d.kpis[k].delta;
+    deltaEl.className   = 'kpi-delta ' + d.kpis[k].cls;
+    const spark = document.getElementById('spark-' + k);
+    const dot   = document.getElementById('spark-' + k + '-dot');
+    if (spark && d.sparks[k]) spark.setAttribute('points', d.sparks[k].pts);
+    if (dot   && d.sparks[k]) dot.setAttribute('cy', d.sparks[k].cy);
+  });
+
+  // Tables
+  if (t) {
+    document.getElementById('revenue-cat-sub').textContent = t.revCatSub;
+    renderBarRows('revenue-cat-body', t.revCat);
+    renderBarRows('acq-channels-body', t.acq);
+    renderFulfilmentRows('fulfilment-body', t.fulfilment);
+    renderSimpleRows('repeat-body', t.repeat);
+  }
+}
+
+// ── PERIOD BUTTON ─────────────────────────────────────────────
+function setPeriod(btn) {
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyPeriod(btn.textContent.trim());
+}
+
+// ── VIEW SWITCHER ─────────────────────────────────────────────
 function switchView(id, btn) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -1311,10 +1605,8 @@ function switchView(id, btn) {
   document.getElementById('view-title').textContent = titles[id];
 }
 
-function setPeriod(btn) {
-  document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
+// Initialise with 30D
+applyPeriod('30D');
 </script>
 </body>
 </html>
